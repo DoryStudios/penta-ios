@@ -225,10 +225,19 @@
                         </view>
                     </subviews>
                 </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U1D-lq-dRr">
+                    <rect key="frame" x="4" y="4" width="30" height="30"/>
+                    <state key="normal" title="X"/>
+                    <connections>
+                        <action selector="didPressDismiss:" destination="iN0-l3-epB" eventType="touchUpInside" id="vb7-zr-YlA"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="xRO-BB-8hS" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="53S-9b-4fn"/>
+                <constraint firstItem="U1D-lq-dRr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="6WH-RC-tIb"/>
+                <constraint firstItem="U1D-lq-dRr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="BQc-6b-Ddf"/>
                 <constraint firstAttribute="bottom" secondItem="LZz-5u-2UG" secondAttribute="bottom" id="Jam-GQ-fp5"/>
                 <constraint firstItem="xRO-BB-8hS" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="L5E-4G-Ril"/>
                 <constraint firstItem="LZz-5u-2UG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fUN-l9-YBS"/>
