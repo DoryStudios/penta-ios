@@ -39,54 +39,6 @@ let PARSE_MATCH_LASTGUESS_KEY = "lastGuess"
 class ParseHelper: NSObject {
     
     var delegate: ParseHelperDelegate?
-
-    class var sharedInstance: ParseHelper {
-        struct Static {
-            static let instance: ParseHelper = ParseHelper()
-        }
-        return Static.instance
-    }
-   
-//    func test() {
-//        
-//        let obj = PFObject(className: "TestObject")
-//        obj["foo"] = "bar"
-//        obj.saveInBackground()
-//        
-//    }
-
-//    func getMatchesForUser(user: PFUser) {
-//        let fromUserQuery = PFQuery(className: PARSE_MATCH_CLASS)
-//        fromUserQuery.whereKey(PARSE_FROM_USER_KEY, equalTo: user)
-//        fromUserQuery.includeKey(PARSE_MATCH_LASTGUESS_KEY)
-//        
-//        let toUserQuery = PFQuery(className: PARSE_MATCH_CLASS)
-//        toUserQuery.whereKey(PARSE_TO_USER_KEY, equalTo: user)
-//        toUserQuery.includeKey(PARSE_MATCH_LASTGUESS_KEY)
-//        
-//        let mainQuery = PFQuery.orQueryWithSubqueries([fromUserQuery, toUserQuery])
-//        
-//        //return mainQuery.findObjects() as! [Match]
-//        mainQuery.findObjectsInBackgroundWithBlock { (result: [AnyObject]?, error: NSError?) -> Void in
-//            if let matches = result as? [Match] {
-//                self.delegate?.retrievedMatchResults(matches)
-//            }
-//        }
-//    }
-//    
-//    func getGuessesForMatch(match: Match) {
-//        
-//        let matchQuery = PFQuery(className: PARSE_GUESS_CLASS)
-//        
-//        matchQuery.whereKey(PARSE_GUESS_MATCH_KEY, equalTo: match)
-//        
-//        matchQuery.findObjectsInBackgroundWithBlock { (result: [AnyObject]?, error: NSError?) -> Void in
-//            if let guesses = result as? [Guess] {
-//                //self.delegate?.retrievedMatchResults(matches)
-//                print("retrieved guesses")
-//            }
-//        }
-//    }
     
     static func fetchMatchesForUser(user: PFUser, includeFinished include: Bool, completionBlock: PFArrayResultBlock) {
         let fromUserQuery = PFQuery(className: PARSE_MATCH_CLASS)

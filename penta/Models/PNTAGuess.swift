@@ -24,6 +24,41 @@ class PNTAGuess: PFObject {
         set { self[PARSE_STRING_GUESS_KEY] = newValue }
         get { return self[PARSE_STRING_GUESS_KEY] as! String? }
     }
+    
+    var guessUploadTask: UIBackgroundTaskIdentifier?
+    
+    func uploadGuess() {
+    
+        if match != nil {
+        
+            owner = PFUser.currentUser()
+            
+            guessUploadTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ () -> Void in
+                UIApplication.sharedApplication().endBackgroundTask(self.guessUploadTask!)
+            })
+            
+            saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+
+                if let error = error {
+                    //something bad happened
+                    print("error: \(error.description)")
+                }
+                
+                UIApplication.sharedApplication().endBackgroundTask(self.guessUploadTask!)
+                
+                if success {
+                    //created match successfully
+                    print("created guess OK")
+                }
+                
+            }
+        } else {
+            
+            //upload guess without match? NO, bad!
+            
+        }
+    
+    }
 
 }
 

@@ -47,6 +47,47 @@ class PNTAMatch: PFObject {
     
     var isLocalMatch: Bool = false
     var guesses: [PNTAGuess] = []
+    
+    var matchUploadTask: UIBackgroundTaskIdentifier?
+    
+    func uploadMatch() {
+        fromUser = PFUser.currentUser()
+        isReady = false
+        
+        saveMatch()
+    }
+    
+    func saveMatch() {
+        matchUploadTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ () -> Void in
+            UIApplication.sharedApplication().endBackgroundTask(self.matchUploadTask!)
+        })
+        
+        saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+
+            if let error = error {
+                //something bad happened
+                print("error saving: \(error.description)")
+            }
+            
+            UIApplication.sharedApplication().endBackgroundTask(self.matchUploadTask!)
+            
+            if success {
+                //created match successfully
+                print("saved match OK")
+            }
+            
+        }
+    }
+    
+    func fetchGuesses() {
+        ParseHelper.fetchGuessesForMatch(self)  //trailing closure
+        { (result: [AnyObject]?, error: NSError?) -> Void in
+            if let guesses = result as? [PNTAGuess] {
+                self.guesses = guesses
+                print("retrieved guesses")
+            }
+        }
+    }
 }
 
 extension PNTAMatch: PFSubclassing {

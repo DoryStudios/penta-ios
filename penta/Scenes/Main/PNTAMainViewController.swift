@@ -28,11 +28,11 @@ class PNTAMainViewController: UITableViewController {
     var wordSelector: PNTAWordSelectorView?
     
     func pushMatch(match: PNTAMatch) {
-        if match.isLocalMatch {
-            let word = WordHelper.randomWord()
-            match.toUserWord = word
-            LocalMatchHelper.setMatch(match)
-        }
+//        if match.isLocalMatch {
+//            let word = WordHelper.randomWord()
+//            match.toUserWord = word
+//            LocalMatchHelper.setMatch(match)
+//        }
         potentialMatch = match
         performSegueWithIdentifier(GAMEPLAY_SEGUE, sender: self)
     }
@@ -73,9 +73,9 @@ class PNTAMainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let nc = self.navigationController {
-            nc.setNavigationBarHidden(true, animated: false)
-        }
+//        if let nc = self.navigationController {
+//            nc.setNavigationBarHidden(true, animated: false)
+//        }
     }
     
     override func viewWillAppear(animated: Bool) {
