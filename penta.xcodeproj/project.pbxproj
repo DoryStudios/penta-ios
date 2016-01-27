@@ -1,0 +1,506 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4948E7981C53409C00335BE0 /* PNTAMatchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948E7961C53409C00335BE0 /* PNTAMatchTableViewCell.swift */; };
+		4948E7991C53409C00335BE0 /* PNTAMatchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4948E7971C53409C00335BE0 /* PNTAMatchTableViewCell.xib */; };
+		4948E79B1C53497300335BE0 /* LocalMatchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948E79A1C53497300335BE0 /* LocalMatchHelper.swift */; };
+		4948E79D1C534A8600335BE0 /* ParseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948E79C1C534A8600335BE0 /* ParseHelper.swift */; };
+		4948E7A11C534E3100335BE0 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4948E79E1C534E3100335BE0 /* FBSDKCoreKit.framework */; };
+		4948E7A21C534E3100335BE0 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4948E79F1C534E3100335BE0 /* FBSDKLoginKit.framework */; };
+		4948E7A31C534E3100335BE0 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4948E7A01C534E3100335BE0 /* FBSDKShareKit.framework */; };
+		4948E7AA1C534E5000335BE0 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4948E7A41C534E5000335BE0 /* ParseCrashReporting.framework */; };
+		4948E7AB1C534E5000335BE0 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4948E7A51C534E5000335BE0 /* ParseFacebookUtilsV4.framework */; };
+		4948E7AC1C534E5000335BE0 /* ParseTwitterUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4948E7A61C534E5000335BE0 /* ParseTwitterUtils.framework */; };
+		4948E7AD1C534E5000335BE0 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4948E7A71C534E5000335BE0 /* ParseUI.framework */; };
+		4948E7AE1C534E5000335BE0 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4948E7A81C534E5000335BE0 /* Bolts.framework */; };
+		4948E7AF1C534E5000335BE0 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4948E7A91C534E5000335BE0 /* Parse.framework */; };
+		4948E7B11C534E5900335BE0 /* FacebookSDKStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4948E7B01C534E5900335BE0 /* FacebookSDKStrings.bundle */; };
+		4948E7B41C53525700335BE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4948E7B31C53525700335BE0 /* SystemConfiguration.framework */; };
+		4948E7B61C53528800335BE0 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4948E7B51C53528800335BE0 /* libsqlite3.tbd */; };
+		4948E7B81C5352B000335BE0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4948E7B71C5352B000335BE0 /* AudioToolbox.framework */; };
+		4948E7BC1C54148D00335BE0 /* PNTAMenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948E7BB1C54148D00335BE0 /* PNTAMenuHeaderView.swift */; };
+		4948E7BE1C5414BE00335BE0 /* PNTAMenuHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4948E7BD1C5414BE00335BE0 /* PNTAMenuHeaderView.xib */; };
+		4948E7C11C54221500335BE0 /* PNTAWordSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948E7C01C54221500335BE0 /* PNTAWordSelectorView.swift */; };
+		4948E7C31C54222400335BE0 /* PNTAWordSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4948E7C21C54222400335BE0 /* PNTAWordSelectorView.xib */; };
+		4948E7C51C55934600335BE0 /* WordHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948E7C41C55934600335BE0 /* WordHelper.swift */; };
+		4948E7C71C55C09900335BE0 /* PNTAMatchHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4948E7C61C55C09900335BE0 /* PNTAMatchHeaderView.xib */; };
+		4948E7CA1C55C84C00335BE0 /* PNTAGuessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948E7C81C55C84C00335BE0 /* PNTAGuessTableViewCell.swift */; };
+		4948E7CB1C55C84C00335BE0 /* PNTAGuessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4948E7C91C55C84C00335BE0 /* PNTAGuessTableViewCell.xib */; };
+		4948E7D31C55DAB100335BE0 /* dict.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4948E7D21C55DAB100335BE0 /* dict.plist */; };
+		49492FF51C56E24A0078E0BD /* libLexicontext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49492FF21C56E24A0078E0BD /* libLexicontext.a */; };
+		49492FF61C56E24A0078E0BD /* LexicontextAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 49492FF41C56E24A0078E0BD /* LexicontextAssets.bundle */; };
+		497726761C4F67050049730C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497726751C4F67050049730C /* AppDelegate.swift */; };
+		4977267F1C4F67050049730C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4977267D1C4F67050049730C /* Main.storyboard */; };
+		497726811C4F67050049730C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 497726801C4F67050049730C /* Assets.xcassets */; };
+		497726841C4F67050049730C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 497726821C4F67050049730C /* LaunchScreen.storyboard */; };
+		497726911C4F691A0049730C /* PNTAMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497726901C4F691A0049730C /* PNTAMainViewController.swift */; };
+		4977269B1C4F6A800049730C /* PNTAGameplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977269A1C4F6A800049730C /* PNTAGameplayViewController.swift */; };
+		4977269D1C4F6BB40049730C /* PNTAMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977269C1C4F6BB40049730C /* PNTAMatch.swift */; };
+		4977269F1C4F6BFF0049730C /* PNTAGuess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977269E1C4F6BFF0049730C /* PNTAGuess.swift */; };
+		497726A21C4F6F5F0049730C /* PNTAMenuHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497726A01C4F6F5F0049730C /* PNTAMenuHeaderTableViewCell.swift */; };
+		497726A31C4F6F5F0049730C /* PNTAMenuHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 497726A11C4F6F5F0049730C /* PNTAMenuHeaderTableViewCell.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4948E7961C53409C00335BE0 /* PNTAMatchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PNTAMatchTableViewCell.swift; sourceTree = "<group>"; };
+		4948E7971C53409C00335BE0 /* PNTAMatchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PNTAMatchTableViewCell.xib; sourceTree = "<group>"; };
+		4948E79A1C53497300335BE0 /* LocalMatchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalMatchHelper.swift; sourceTree = "<group>"; };
+		4948E79C1C534A8600335BE0 /* ParseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseHelper.swift; sourceTree = "<group>"; };
+		4948E79E1C534E3100335BE0 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		4948E79F1C534E3100335BE0 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		4948E7A01C534E3100335BE0 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		4948E7A41C534E5000335BE0 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
+		4948E7A51C534E5000335BE0 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
+		4948E7A61C534E5000335BE0 /* ParseTwitterUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseTwitterUtils.framework; sourceTree = "<group>"; };
+		4948E7A71C534E5000335BE0 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
+		4948E7A81C534E5000335BE0 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		4948E7A91C534E5000335BE0 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		4948E7B01C534E5900335BE0 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKStrings.bundle; sourceTree = "<group>"; };
+		4948E7B31C53525700335BE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4948E7B51C53528800335BE0 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		4948E7B71C5352B000335BE0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4948E7BB1C54148D00335BE0 /* PNTAMenuHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PNTAMenuHeaderView.swift; path = ../../../PNTAMenuHeaderView.swift; sourceTree = "<group>"; };
+		4948E7BD1C5414BE00335BE0 /* PNTAMenuHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PNTAMenuHeaderView.xib; sourceTree = "<group>"; };
+		4948E7C01C54221500335BE0 /* PNTAWordSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PNTAWordSelectorView.swift; sourceTree = "<group>"; };
+		4948E7C21C54222400335BE0 /* PNTAWordSelectorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PNTAWordSelectorView.xib; sourceTree = "<group>"; };
+		4948E7C41C55934600335BE0 /* WordHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordHelper.swift; sourceTree = "<group>"; };
+		4948E7C61C55C09900335BE0 /* PNTAMatchHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PNTAMatchHeaderView.xib; sourceTree = "<group>"; };
+		4948E7C81C55C84C00335BE0 /* PNTAGuessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PNTAGuessTableViewCell.swift; sourceTree = "<group>"; };
+		4948E7C91C55C84C00335BE0 /* PNTAGuessTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PNTAGuessTableViewCell.xib; sourceTree = "<group>"; };
+		4948E7D21C55DAB100335BE0 /* dict.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dict.plist; sourceTree = "<group>"; };
+		49492FF21C56E24A0078E0BD /* libLexicontext.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLexicontext.a; sourceTree = "<group>"; };
+		49492FF31C56E24A0078E0BD /* Lexicontext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lexicontext.h; sourceTree = "<group>"; };
+		49492FF41C56E24A0078E0BD /* LexicontextAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LexicontextAssets.bundle; sourceTree = "<group>"; };
+		49492FF71C56E2710078E0BD /* penta-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "penta-Bridging-Header.h"; sourceTree = "<group>"; };
+		497726721C4F67050049730C /* penta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = penta.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		497726751C4F67050049730C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4977267E1C4F67050049730C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		497726801C4F67050049730C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		497726831C4F67050049730C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		497726851C4F67050049730C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		497726901C4F691A0049730C /* PNTAMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PNTAMainViewController.swift; sourceTree = "<group>"; };
+		4977269A1C4F6A800049730C /* PNTAGameplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PNTAGameplayViewController.swift; sourceTree = "<group>"; };
+		4977269C1C4F6BB40049730C /* PNTAMatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PNTAMatch.swift; sourceTree = "<group>"; };
+		4977269E1C4F6BFF0049730C /* PNTAGuess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PNTAGuess.swift; sourceTree = "<group>"; };
+		497726A01C4F6F5F0049730C /* PNTAMenuHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PNTAMenuHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		497726A11C4F6F5F0049730C /* PNTAMenuHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PNTAMenuHeaderTableViewCell.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4977266F1C4F67050049730C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4948E7B81C5352B000335BE0 /* AudioToolbox.framework in Frameworks */,
+				4948E7B61C53528800335BE0 /* libsqlite3.tbd in Frameworks */,
+				4948E7B41C53525700335BE0 /* SystemConfiguration.framework in Frameworks */,
+				49492FF51C56E24A0078E0BD /* libLexicontext.a in Frameworks */,
+				4948E7A21C534E3100335BE0 /* FBSDKLoginKit.framework in Frameworks */,
+				4948E7AF1C534E5000335BE0 /* Parse.framework in Frameworks */,
+				4948E7A11C534E3100335BE0 /* FBSDKCoreKit.framework in Frameworks */,
+				4948E7AD1C534E5000335BE0 /* ParseUI.framework in Frameworks */,
+				4948E7A31C534E3100335BE0 /* FBSDKShareKit.framework in Frameworks */,
+				4948E7AA1C534E5000335BE0 /* ParseCrashReporting.framework in Frameworks */,
+				4948E7AC1C534E5000335BE0 /* ParseTwitterUtils.framework in Frameworks */,
+				4948E7AB1C534E5000335BE0 /* ParseFacebookUtilsV4.framework in Frameworks */,
+				4948E7AE1C534E5000335BE0 /* Bolts.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4948E7B21C5351CA00335BE0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				49492FF21C56E24A0078E0BD /* libLexicontext.a */,
+				49492FF31C56E24A0078E0BD /* Lexicontext.h */,
+				49492FF41C56E24A0078E0BD /* LexicontextAssets.bundle */,
+				4948E7B71C5352B000335BE0 /* AudioToolbox.framework */,
+				4948E7B51C53528800335BE0 /* libsqlite3.tbd */,
+				4948E7B31C53525700335BE0 /* SystemConfiguration.framework */,
+				4948E7B01C534E5900335BE0 /* FacebookSDKStrings.bundle */,
+				4948E7A41C534E5000335BE0 /* ParseCrashReporting.framework */,
+				4948E7A51C534E5000335BE0 /* ParseFacebookUtilsV4.framework */,
+				4948E7A61C534E5000335BE0 /* ParseTwitterUtils.framework */,
+				4948E7A71C534E5000335BE0 /* ParseUI.framework */,
+				4948E7A81C534E5000335BE0 /* Bolts.framework */,
+				4948E7A91C534E5000335BE0 /* Parse.framework */,
+				4948E79E1C534E3100335BE0 /* FBSDKCoreKit.framework */,
+				4948E79F1C534E3100335BE0 /* FBSDKLoginKit.framework */,
+				4948E7A01C534E3100335BE0 /* FBSDKShareKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4948E7BF1C5421D000335BE0 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4948E7C01C54221500335BE0 /* PNTAWordSelectorView.swift */,
+				4948E7C21C54222400335BE0 /* PNTAWordSelectorView.xib */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		497726691C4F67050049730C = {
+			isa = PBXGroup;
+			children = (
+				497726741C4F67050049730C /* penta */,
+				497726731C4F67050049730C /* Products */,
+				4948E7B21C5351CA00335BE0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		497726731C4F67050049730C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				497726721C4F67050049730C /* penta.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		497726741C4F67050049730C /* penta */ = {
+			isa = PBXGroup;
+			children = (
+				4977268D1C4F68720049730C /* Scenes */,
+				4977268B1C4F68720049730C /* Helpers */,
+				4977268C1C4F68720049730C /* Models */,
+				497726751C4F67050049730C /* AppDelegate.swift */,
+				4977267D1C4F67050049730C /* Main.storyboard */,
+				497726801C4F67050049730C /* Assets.xcassets */,
+				497726821C4F67050049730C /* LaunchScreen.storyboard */,
+				4948E7D21C55DAB100335BE0 /* dict.plist */,
+				497726851C4F67050049730C /* Info.plist */,
+				49492FF71C56E2710078E0BD /* penta-Bridging-Header.h */,
+			);
+			path = penta;
+			sourceTree = "<group>";
+		};
+		4977268B1C4F68720049730C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4948E79A1C53497300335BE0 /* LocalMatchHelper.swift */,
+				4948E79C1C534A8600335BE0 /* ParseHelper.swift */,
+				4948E7C41C55934600335BE0 /* WordHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		4977268C1C4F68720049730C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4977269C1C4F6BB40049730C /* PNTAMatch.swift */,
+				4977269E1C4F6BFF0049730C /* PNTAGuess.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4977268D1C4F68720049730C /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				4977268F1C4F68C30049730C /* Main */,
+				4977268E1C4F68C30049730C /* Gameplay */,
+				4948E7BF1C5421D000335BE0 /* Shared */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		4977268E1C4F68C30049730C /* Gameplay */ = {
+			isa = PBXGroup;
+			children = (
+				4977269A1C4F6A800049730C /* PNTAGameplayViewController.swift */,
+				4948E7C81C55C84C00335BE0 /* PNTAGuessTableViewCell.swift */,
+				4948E7C91C55C84C00335BE0 /* PNTAGuessTableViewCell.xib */,
+			);
+			path = Gameplay;
+			sourceTree = "<group>";
+		};
+		4977268F1C4F68C30049730C /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				497726901C4F691A0049730C /* PNTAMainViewController.swift */,
+				497726A01C4F6F5F0049730C /* PNTAMenuHeaderTableViewCell.swift */,
+				497726A11C4F6F5F0049730C /* PNTAMenuHeaderTableViewCell.xib */,
+				4948E7BB1C54148D00335BE0 /* PNTAMenuHeaderView.swift */,
+				4948E7BD1C5414BE00335BE0 /* PNTAMenuHeaderView.xib */,
+				4948E7961C53409C00335BE0 /* PNTAMatchTableViewCell.swift */,
+				4948E7971C53409C00335BE0 /* PNTAMatchTableViewCell.xib */,
+				4948E7C61C55C09900335BE0 /* PNTAMatchHeaderView.xib */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		497726711C4F67050049730C /* penta */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 497726881C4F67050049730C /* Build configuration list for PBXNativeTarget "penta" */;
+			buildPhases = (
+				4977266E1C4F67050049730C /* Sources */,
+				4977266F1C4F67050049730C /* Frameworks */,
+				497726701C4F67050049730C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = penta;
+			productName = penta;
+			productReference = 497726721C4F67050049730C /* penta.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4977266A1C4F67050049730C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Dory Studios";
+				TargetAttributes = {
+					497726711C4F67050049730C = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = 4977266D1C4F67050049730C /* Build configuration list for PBXProject "penta" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 497726691C4F67050049730C;
+			productRefGroup = 497726731C4F67050049730C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				497726711C4F67050049730C /* penta */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		497726701C4F67050049730C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4948E7991C53409C00335BE0 /* PNTAMatchTableViewCell.xib in Resources */,
+				497726A31C4F6F5F0049730C /* PNTAMenuHeaderTableViewCell.xib in Resources */,
+				4948E7D31C55DAB100335BE0 /* dict.plist in Resources */,
+				4948E7BE1C5414BE00335BE0 /* PNTAMenuHeaderView.xib in Resources */,
+				4948E7C31C54222400335BE0 /* PNTAWordSelectorView.xib in Resources */,
+				497726841C4F67050049730C /* LaunchScreen.storyboard in Resources */,
+				49492FF61C56E24A0078E0BD /* LexicontextAssets.bundle in Resources */,
+				497726811C4F67050049730C /* Assets.xcassets in Resources */,
+				4948E7C71C55C09900335BE0 /* PNTAMatchHeaderView.xib in Resources */,
+				4977267F1C4F67050049730C /* Main.storyboard in Resources */,
+				4948E7CB1C55C84C00335BE0 /* PNTAGuessTableViewCell.xib in Resources */,
+				4948E7B11C534E5900335BE0 /* FacebookSDKStrings.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4977266E1C4F67050049730C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4948E7BC1C54148D00335BE0 /* PNTAMenuHeaderView.swift in Sources */,
+				4948E7CA1C55C84C00335BE0 /* PNTAGuessTableViewCell.swift in Sources */,
+				4948E79B1C53497300335BE0 /* LocalMatchHelper.swift in Sources */,
+				4977269D1C4F6BB40049730C /* PNTAMatch.swift in Sources */,
+				4948E7981C53409C00335BE0 /* PNTAMatchTableViewCell.swift in Sources */,
+				497726A21C4F6F5F0049730C /* PNTAMenuHeaderTableViewCell.swift in Sources */,
+				497726911C4F691A0049730C /* PNTAMainViewController.swift in Sources */,
+				4977269F1C4F6BFF0049730C /* PNTAGuess.swift in Sources */,
+				4948E7C51C55934600335BE0 /* WordHelper.swift in Sources */,
+				4948E7C11C54221500335BE0 /* PNTAWordSelectorView.swift in Sources */,
+				4977269B1C4F6A800049730C /* PNTAGameplayViewController.swift in Sources */,
+				497726761C4F67050049730C /* AppDelegate.swift in Sources */,
+				4948E79D1C534A8600335BE0 /* ParseHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4977267D1C4F67050049730C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4977267E1C4F67050049730C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		497726821C4F67050049730C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				497726831C4F67050049730C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		497726861C4F67050049730C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		497726871C4F67050049730C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		497726891C4F67050049730C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = penta/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = doryStudios.penta;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "penta/penta-Bridging-Header.h";
+			};
+			name = Debug;
+		};
+		4977268A1C4F67050049730C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = penta/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = doryStudios.penta;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "penta/penta-Bridging-Header.h";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4977266D1C4F67050049730C /* Build configuration list for PBXProject "penta" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				497726861C4F67050049730C /* Debug */,
+				497726871C4F67050049730C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		497726881C4F67050049730C /* Build configuration list for PBXNativeTarget "penta" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				497726891C4F67050049730C /* Debug */,
+				4977268A1C4F67050049730C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4977266A1C4F67050049730C /* Project object */;
+}
