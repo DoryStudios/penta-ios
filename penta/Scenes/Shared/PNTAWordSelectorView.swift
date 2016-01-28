@@ -48,6 +48,13 @@ class PNTAWordSelectorView: UIView {
     }
     
     @IBAction func didPressRandom(sender: AnyObject) {
+        let word = WordHelper.randomWord()
+        let chars = Array(word.uppercaseString.characters)
+        for var i = 0; i < chars.count; i++ {
+            let label = labels[i]
+            let char = chars[i]
+            label.text = "\(char)"
+        }
     }
     func prepare() {
         blindField.delegate = self
