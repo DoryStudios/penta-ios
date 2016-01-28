@@ -75,3 +75,15 @@ extension PNTAGuess: PFSubclassing {
         }
     }
 }
+
+extension PFUser {
+
+    func madeGuess(guess: PNTAGuess) -> Bool {
+        
+        if objectId == guess.owner?.objectId {
+            return true
+        }
+        return false
+    }
+
+}

@@ -27,6 +27,41 @@ class PNTAMainViewController: UITableViewController {
     
     var wordSelector: PNTAWordSelectorView?
     
+    func fetchMatches() {
+        if let user = PFUser.currentUser() {
+        ParseHelper.fetchMatchesForUser(user, includeFinished: false, completionBlock: {
+            (result: [AnyObject]?, error: NSError?) -> Void in
+                if let matches = result as? [PNTAMatch] {
+                    print("fetched \(matches.count) matches")
+                    self.filterMatches(matches)
+                } else if let error = error {
+                    print("encountered error fetching matches:\n\(error)")
+                }
+            })
+        }
+    }
+    
+    func filterMatches(matches: [PNTAMatch]) {
+        
+        for match in matches {
+            if let lastGuess = match.lastGuess, let user = PFUser.currentUser() {
+                if user.madeGuess(lastGuess) {
+                    pendingMatches.append(match)
+                } else {
+                    activeMatches.append(match)
+                }
+            } else { //no lastGuess, match waiting for user to acknowledge
+            
+            }
+        }
+        
+        updateTable()
+    }
+    
+    func updateTable() {
+        tableView.reloadData()
+    }
+    
     func pushMatch(match: PNTAMatch) {
 //        if match.isLocalMatch {
 //            let word = WordHelper.randomWord()
@@ -72,6 +107,16 @@ class PNTAMainViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if let user = PFUser.currentUser() {
+            if PFFacebookUtils.isLinkedWithUser(user) { //happy path
+                fetchMatches()
+            } else { //likely user invalidated session in facebook
+            
+            }
+        } else { //new user, offer link to facebook, don't bother fetch remote matches
+        
+        }
 
 //        if let nc = self.navigationController {
 //            nc.setNavigationBarHidden(true, animated: false)
