@@ -131,6 +131,10 @@ class PNTAMainViewController: UITableViewController {
 //        }
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         

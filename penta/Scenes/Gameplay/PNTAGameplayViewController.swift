@@ -97,6 +97,10 @@ class PNTAGameplayViewController: UIViewController {
         }
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     //MARK: - Navigation method
 
     @IBAction override func unwindForSegue(unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
