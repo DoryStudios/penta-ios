@@ -13,12 +13,13 @@ class PNTAMenuHeaderTableViewCell: UITableViewCell {
     var callToAction: Bool = false {
         didSet {
             if (callToAction) {
-            
+                actionButton.setTitle("Facebook Connect", forState: .Normal)
             } else {
             
             }
         }
     }
+    @IBOutlet weak var actionButton: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()

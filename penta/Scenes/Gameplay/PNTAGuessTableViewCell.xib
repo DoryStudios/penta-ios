@@ -18,7 +18,7 @@
                         <rect key="frame" x="8" y="8" width="304" height="43"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PENTA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdL-9c-XJH">
-                                <rect key="frame" x="17" y="9" width="76" height="25"/>
+                                <rect key="frame" x="10" y="9" width="76" height="25"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="25"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -33,7 +33,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="gdL-9c-XJH" firstAttribute="leading" secondItem="2Db-dM-unp" secondAttribute="leading" constant="17" id="NCo-9Z-qzp"/>
+                            <constraint firstItem="gdL-9c-XJH" firstAttribute="leading" secondItem="2Db-dM-unp" secondAttribute="leading" constant="10" id="NCo-9Z-qzp"/>
                             <constraint firstAttribute="trailing" secondItem="bfl-qQ-GLP" secondAttribute="trailing" constant="10" id="WiP-ZO-mUB"/>
                             <constraint firstItem="gdL-9c-XJH" firstAttribute="centerY" secondItem="2Db-dM-unp" secondAttribute="centerY" id="qpI-d6-741"/>
                             <constraint firstItem="bfl-qQ-GLP" firstAttribute="centerY" secondItem="2Db-dM-unp" secondAttribute="centerY" id="v1k-zN-CAC"/>

@@ -24,8 +24,8 @@ class PNTAMainViewController: UITableViewController {
     var activeMatches: [PNTAMatch] = []
     
     var potentialMatch: PNTAMatch?
-    
     var wordSelector: PNTAWordSelectorView?
+    var isLinkedToFacebook: Bool = true
     
     func fetchMatches() {
         if let user = PFUser.currentUser() {
@@ -112,12 +112,20 @@ class PNTAMainViewController: UITableViewController {
             if PFFacebookUtils.isLinkedWithUser(user) { //happy path
                 fetchMatches()
             } else { //likely user invalidated session in facebook
-            
+                isLinkedToFacebook = false
             }
         } else { //new user, offer link to facebook, don't bother fetch remote matches
-        
+            isLinkedToFacebook = false
         }
-
+        
+        let imageView = UIImageView(image: UIImage(named: "penta-bg"))
+        imageView.contentMode = .ScaleAspectFill
+        tableView.backgroundView = imageView
+        
+        if !isLinkedToFacebook {
+            updateTable()
+        }
+        
 //        if let nc = self.navigationController {
 //            nc.setNavigationBarHidden(true, animated: false)
 //        }
@@ -153,6 +161,9 @@ class PNTAMainViewController: UITableViewController {
             case 0:
                 let arr = NSBundle.mainBundle().loadNibNamed("PNTAMenuHeaderTableViewCell", owner: self, options: nil)
                 if let newCell = arr[0] as? PNTAMenuHeaderTableViewCell {
+                    if indexPath.row == 1 {
+                        newCell.callToAction = true
+                    }
                     cell = newCell
                 }
                 break
@@ -193,7 +204,9 @@ class PNTAMainViewController: UITableViewController {
         switch section {
             case 0:
                 //call to action button
-                return 1
+                let addSocialButton = isLinkedToFacebook ? 0 : 1
+                return 1 + addSocialButton
+            
             case 1:
                 return activeMatches.count
             case 2:
@@ -222,21 +235,25 @@ class PNTAMainViewController: UITableViewController {
                 titleView = vw
             }
         } else if section == 1 {
-//            titleView = UIView(frame: rect)
-//            titleView?.backgroundColor = UIColor.clearColor()
-//            let label = UILabel(frame: rect)
-//            label.text = "Active Matches"
-            let arr = NSBundle.mainBundle().loadNibNamed("PNTAMatchHeaderView", owner: self, options: nil)
-            if let vw = arr[0] as? UIView {
-                vw.frame = rect
-                titleView = vw
+            if hasActiveMatches {
+                let arr = NSBundle.mainBundle().loadNibNamed("PNTAMatchHeaderView", owner: self, options: nil)
+                if let vw = arr[0] as? UIView {
+                    vw.frame = rect
+                    titleView = vw
+                }
+            } else {
+                titleView = UIView(frame: CGRectZero)
             }
         } else if section == 2 {
-            let arr = NSBundle.mainBundle().loadNibNamed("PNTAMatchHeaderView", owner: self, options: nil)
-            if let vw = arr[0] as? UIView, let label = vw.viewWithTag(42) as? UILabel {
-                vw.frame = rect
-                label.text = "Opponent's Turn"
-                titleView = vw
+            if hasPendingMatches {
+                let arr = NSBundle.mainBundle().loadNibNamed("PNTAMatchHeaderView", owner: self, options: nil)
+                if let vw = arr[0] as? UIView, let label = vw.viewWithTag(42) as? UILabel {
+                    vw.frame = rect
+                    label.text = "Opponent's Turn"
+                    titleView = vw
+                }
+            } else {
+                titleView = UIView(frame: CGRectZero)
             }
         }
         
@@ -252,10 +269,15 @@ class PNTAMainViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let hasPendingMatches = !self.pendingMatches.isEmpty
+        let hasActiveMatches = !self.activeMatches.isEmpty
+        
         if section == 0 {
             return 100.0
-        } else {
+        } else if (section == 1 && hasActiveMatches) || (section == 2 && hasPendingMatches) {
             return 30.0
+        } else {
+            return CGFloat.min
         }
     }
     

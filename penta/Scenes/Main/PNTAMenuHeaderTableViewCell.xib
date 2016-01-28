@@ -15,10 +15,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WdI-Sm-0dr">
-                        <rect key="frame" x="13" y="13" width="294" height="53"/>
+                        <rect key="frame" x="10" y="10" width="301" height="59"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Yq-I1-Cj2">
-                                <rect key="frame" x="0.0" y="0.0" width="294" height="53"/>
+                            <button opaque="NO" tag="42" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Yq-I1-Cj2">
+                                <rect key="frame" x="0.0" y="0.0" width="301" height="59"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                 <state key="normal" title="Quick Start">
                                     <color key="titleColor" red="1" green="0.6068129094628727" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -40,12 +40,15 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="WdI-Sm-0dr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="9IY-Dc-99d"/>
-                    <constraint firstItem="WdI-Sm-0dr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="FQ1-4y-tca"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="WdI-Sm-0dr" secondAttribute="bottom" constant="5" id="HK4-Bh-vg8"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="WdI-Sm-0dr" secondAttribute="trailing" constant="5" id="O3e-hQ-caF"/>
+                    <constraint firstItem="WdI-Sm-0dr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="9IY-Dc-99d"/>
+                    <constraint firstItem="WdI-Sm-0dr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="FQ1-4y-tca"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="WdI-Sm-0dr" secondAttribute="bottom" constant="2" id="HK4-Bh-vg8"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="WdI-Sm-0dr" secondAttribute="trailing" constant="1" id="O3e-hQ-caF"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="actionButton" destination="4Yq-I1-Cj2" id="uSp-zP-A9n"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>
