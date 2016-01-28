@@ -69,7 +69,7 @@ class PNTAMainViewController: UITableViewController {
 //            LocalMatchHelper.setMatch(match)
 //        }
         potentialMatch = match
-        performSegueWithIdentifier(GAMEPLAY_SEGUE, sender: self)
+        performSegueWithIdentifier(GAMEPLAY_SEGUE, sender: match)
     }
     
     func showWordSelectorForMatch(match: PNTAMatch) {
@@ -148,7 +148,7 @@ class PNTAMainViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == GAMEPLAY_SEGUE {
-            if let vc = segue.destinationViewController as? PNTAGameplayViewController, let match = potentialMatch {
+            if let vc = segue.destinationViewController as? PNTAGameplayViewController, let match = sender as? PNTAMatch {
                 vc.match = match
             }
         }

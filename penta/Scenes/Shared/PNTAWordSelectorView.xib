@@ -207,6 +207,15 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KqH-2Y-Ohh">
                             <rect key="frame" x="0.0" y="200" width="300" height="100"/>
                             <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bsW-Zc-QCI">
+                                    <rect key="frame" x="24" y="35" width="66" height="30"/>
+                                    <state key="normal" title="RANDOM">
+                                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="didPressRandom:" destination="iN0-l3-epB" eventType="touchUpInside" id="Wpb-4U-Rz9"/>
+                                    </connections>
+                                </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shK-ZG-Je8">
                                     <rect key="frame" x="135" y="35" width="30" height="30"/>
                                     <state key="normal" title="OK">
@@ -221,12 +230,15 @@
                             <constraints>
                                 <constraint firstItem="shK-ZG-Je8" firstAttribute="centerY" secondItem="KqH-2Y-Ohh" secondAttribute="centerY" id="dQF-Oa-MNd"/>
                                 <constraint firstItem="shK-ZG-Je8" firstAttribute="centerX" secondItem="KqH-2Y-Ohh" secondAttribute="centerX" id="iqY-mP-Zqw"/>
+                                <constraint firstItem="shK-ZG-Je8" firstAttribute="leading" secondItem="bsW-Zc-QCI" secondAttribute="trailing" constant="45" id="obA-CW-4cu"/>
+                                <constraint firstItem="bsW-Zc-QCI" firstAttribute="centerY" secondItem="shK-ZG-Je8" secondAttribute="centerY" id="vII-Ty-9f5"/>
                             </constraints>
                         </view>
                     </subviews>
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U1D-lq-dRr">
-                    <rect key="frame" x="4" y="4" width="30" height="30"/>
+                    <rect key="frame" x="4" y="4" width="30" height="38"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
                     <state key="normal" title="X"/>
                     <connections>
                         <action selector="didPressDismiss:" destination="iN0-l3-epB" eventType="touchUpInside" id="vb7-zr-YlA"/>

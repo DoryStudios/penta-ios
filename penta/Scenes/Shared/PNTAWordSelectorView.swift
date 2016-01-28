@@ -47,6 +47,8 @@ class PNTAWordSelectorView: UIView {
         delegate?.wordSelector(self, didFinishWithSuccess: false)
     }
     
+    @IBAction func didPressRandom(sender: AnyObject) {
+    }
     func prepare() {
         blindField.delegate = self
         
