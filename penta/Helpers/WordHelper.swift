@@ -18,6 +18,19 @@ struct WordHelper {
             return false
         }
         
+        let letters = NSCharacterSet.letterCharacterSet()
+        for char in word.unicodeScalars {
+            if !letters.longCharacterIsMember(char.value) {
+                print("invalid character")
+                return false
+            }
+        }
+        
+        let whitespace = NSCharacterSet.whitespaceCharacterSet()
+        if let _ = word.rangeOfCharacterFromSet(whitespace) {
+            return false
+        }
+        
         let dictionary = Lexicontext.sharedDictionary()
         if !dictionary.containsDefinitionFor(word.lowercaseString) {
             print("no definition")

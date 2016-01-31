@@ -39,6 +39,7 @@ class PNTAWordSelectorView: UIView {
         let shouldFinish = delegate?.wordSelector(self, shouldFinishWithWord: word) ?? false
         
         if shouldFinish {
+            self.word = word
             delegate?.wordSelector(self, didFinishWithSuccess: true)
         }
     }

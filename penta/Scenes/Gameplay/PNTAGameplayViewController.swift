@@ -54,6 +54,9 @@ class PNTAGameplayViewController: UIViewController {
         match.guesses.append(guess)
         playerGuesses.append(guess)
         playerTable.reloadData()
+
+        let indexPath = NSIndexPath(forRow: playerGuesses.count-1, inSection: 0)
+        playerTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
         
         if isLocalMatch {
             let opponentWord = WordHelper.randomWord()
@@ -71,6 +74,10 @@ class PNTAGameplayViewController: UIViewController {
                 //pop gameplay scene?
             }
         }
+    }
+    
+    func addGuess(guess: PNTAGuess, toTable table:UITableView) {
+        
     }
     
     func showWordSelector() {
@@ -191,6 +198,28 @@ extension PNTAGameplayViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 60.0
+    }
+}
+
+extension PNTAGameplayViewController: UITableViewDelegate {
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let cellContentView  = cell.contentView;
+        let rotationAngleDegrees = -30.0;
+        let rotationAngleRadians = rotationAngleDegrees * (M_PI/180);
+//        let offsetPositioning = CGPointMake(500, -20.0);
+        let offsetPositioning = CGPointMake(0, cell.contentView.frame.size.height*4);
+        var transform = CATransform3DIdentity;
+        transform = CATransform3DRotate(transform, CGFloat(rotationAngleRadians), -50.0, 0.0, 1.0);
+        transform = CATransform3DTranslate(transform, offsetPositioning.x, offsetPositioning.y, -50.0);
+        cellContentView.layer.transform = transform;
+        cellContentView.layer.opacity = 0.8;
+        
+        UIView.animateWithDuration(0.65, delay: 0.0, usingSpringWithDamping: 0.65, initialSpringVelocity: 0.8, options: .TransitionNone, animations: { () -> Void in
+            cellContentView.layer.transform = CATransform3DIdentity;
+            cellContentView.layer.opacity = 1;
+            }) { (success) -> Void in
+                
+        }
     }
 }
 
