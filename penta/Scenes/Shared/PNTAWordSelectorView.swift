@@ -56,6 +56,7 @@ class PNTAWordSelectorView: UIView {
             label.text = "\(char)"
         }
     }
+    
     func prepare() {
         blindField.delegate = self
         
@@ -74,6 +75,10 @@ class PNTAWordSelectorView: UIView {
         }
         
         containers[0].backgroundColor = UIColor.lightGrayColor()
+        
+        layer.borderWidth = 1.0
+        layer.borderColor = UIColor.groupTableViewBackgroundColor().CGColor
+        layer.cornerRadius = 8.0
     }
     
     func buildWord() -> String {
@@ -126,7 +131,7 @@ class PNTAWordSelectorView: UIView {
             if success && enabled {
                 
             } else if success {
-                
+                self.removeFromSuperview()
             }
         }
     }

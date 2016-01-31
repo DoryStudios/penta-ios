@@ -50,6 +50,29 @@ class PNTAGameplayViewController: UIViewController {
     
     var isLocalMatch: Bool = false
     
+    func pushGuess(guess: PNTAGuess) {
+        match.guesses.append(guess)
+        playerGuesses.append(guess)
+        playerTable.reloadData()
+        
+        if isLocalMatch {
+            let opponentWord = WordHelper.randomWord()
+            let opponentGuess = PNTAGuess()
+            opponentGuess.string = opponentWord
+            match.guesses.append(opponentGuess)
+            opponentGuesses.append(opponentGuess)
+            opponentTable.reloadData()
+            LocalMatchHelper.setGuesses(match.guesses)
+        } else { //submit online
+            if let match = match, let user = PFUser.currentUser() {
+                guess.match = match
+                guess.owner = user
+                guess.uploadGuess()
+                //pop gameplay scene?
+            }
+        }
+    }
+    
     func showWordSelector() {
         if wordSelector == nil {
             let nibs = NSBundle.mainBundle().loadNibNamed("PNTAWordSelectorView", owner: self, options: nil)
@@ -59,7 +82,7 @@ class PNTAGameplayViewController: UIViewController {
                     let center = CGPointMake(view.center.x, view.frame.size.height*1.2)
                     selector.bounds = rect
                     selector.center = center
-                    view.addSubview(selector)
+//                    view.addSubview(selector)
                     selector.prepare()
                     selector.delegate = self
                     wordSelector = selector
@@ -68,6 +91,7 @@ class PNTAGameplayViewController: UIViewController {
         }
         
         if let selector = wordSelector {
+            view.addSubview(wordSelector!)
             selector.potentialMatch = match
             let point = CGPointMake(view.center.x, view.center.y*0.5)
             selector.animateCenterToPoint(point, enableEntry: true)
@@ -138,19 +162,30 @@ extension PNTAGameplayViewController: UITableViewDataSource {
                 cell = newCell
             }
         }
+        
         let index = indexPath.row
         var guess: PNTAGuess!
         if tableView == self.playerTable {
             guess = playerGuesses[index]
-            
+            if isLocalMatch {
+                let count = WordHelper.commonCharactersForWord(guess.string!, inMatchString: match.toUserWord!)
+                cell!.count = count
+            }
         } else if tableView == self.opponentTable {
             guess = opponentGuesses[index]
+            if isLocalMatch {
+                let count = WordHelper.commonCharactersForWord(guess.string!, inMatchString: match.fromUserWord!)
+                cell!.count = count
+            }
         }
+        
         cell!.guess = guess
+        
         cell!.backgroundColor = UIColor.clearColor()
         if let bgView = cell!.backgroundView {
             bgView.backgroundColor = UIColor.clearColor()
         }
+        
         return cell!
     }
     
@@ -167,21 +202,22 @@ extension PNTAGameplayViewController: PNTAWordSelectorViewDelegate {
             let guess = PNTAGuess()
             guess.string = word
             
-            match.guesses.append(guess)
-            playerGuesses.append(guess)
-            playerTable.reloadData()
-            
-            if isLocalMatch {
-                let opponentWord = WordHelper.randomWord()
-                let opponentGuess = PNTAGuess()
-                opponentGuess.string = opponentWord
-                match.guesses.append(opponentGuess)
-                opponentGuesses.append(opponentGuess)
-                opponentTable.reloadData()
-                LocalMatchHelper.setGuesses(match.guesses)
-            } else {
-            
-            }
+            pushGuess(guess)
+//            match.guesses.append(guess)
+//            playerGuesses.append(guess)
+//            playerTable.reloadData()
+//            
+//            if isLocalMatch {
+//                let opponentWord = WordHelper.randomWord()
+//                let opponentGuess = PNTAGuess()
+//                opponentGuess.string = opponentWord
+//                match.guesses.append(opponentGuess)
+//                opponentGuesses.append(opponentGuess)
+//                opponentTable.reloadData()
+//                LocalMatchHelper.setGuesses(match.guesses)
+//            } else {
+//            
+//            }
             
         }
     }

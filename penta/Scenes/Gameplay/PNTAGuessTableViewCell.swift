@@ -20,12 +20,13 @@ class PNTAGuessTableViewCell: UITableViewCell {
     
     var count = 0 {
         didSet {
-            
+            guessCountLabel.text = "\(count)"
         }
     }
 
     @IBOutlet weak var guessIndicator: UIImageView!
     @IBOutlet weak var guessLabel: UILabel!
+    @IBOutlet weak var guessCountLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

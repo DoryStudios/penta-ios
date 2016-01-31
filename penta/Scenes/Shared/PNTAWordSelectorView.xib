@@ -24,11 +24,20 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick your word" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOP-19-bq7">
                                     <rect key="frame" x="94" y="39" width="113" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U1D-lq-dRr">
+                                    <rect key="frame" x="0.0" y="0.0" width="30" height="38"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                    <state key="normal" title="X">
+                                        <color key="titleColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="didPressDismiss:" destination="iN0-l3-epB" eventType="touchUpInside" id="vb7-zr-YlA"/>
+                                    </connections>
+                                </button>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="jOP-19-bq7" firstAttribute="centerY" secondItem="tHG-bi-wXt" secondAttribute="centerY" id="JNz-5H-b21"/>
                                 <constraint firstItem="jOP-19-bq7" firstAttribute="centerX" secondItem="tHG-bi-wXt" secondAttribute="centerX" id="QbY-mU-xNI"/>
@@ -62,7 +71,6 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="d6y-xn-lOp" secondAttribute="bottom" constant="5" id="OjL-5A-Cmc"/>
                                         <constraint firstItem="d6y-xn-lOp" firstAttribute="leading" secondItem="81L-6W-TJ6" secondAttribute="leading" constant="5" id="mYc-eG-J0c"/>
@@ -95,7 +103,6 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="QMd-cz-eDD" firstAttribute="top" secondItem="4v5-vQ-Kyc" secondAttribute="top" constant="5" id="i5c-Cn-7A9"/>
                                         <constraint firstAttribute="trailing" secondItem="QMd-cz-eDD" secondAttribute="trailing" constant="5" id="vI5-eU-761"/>
@@ -128,7 +135,6 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="eQ2-if-8Jv" firstAttribute="leading" secondItem="EML-3w-txY" secondAttribute="leading" constant="5" id="EHf-0Z-ZSW"/>
                                         <constraint firstItem="eQ2-if-8Jv" firstAttribute="top" secondItem="EML-3w-txY" secondAttribute="top" constant="5" id="WOE-Ob-BPD"/>
@@ -161,7 +167,6 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="T1K-0k-7e6" secondAttribute="bottom" constant="5" id="Hvf-MV-fa8"/>
                                         <constraint firstItem="T1K-0k-7e6" firstAttribute="leading" secondItem="hjb-aD-ayd" secondAttribute="leading" constant="5" id="WGG-vR-heV"/>
@@ -194,7 +199,6 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="AMV-Oj-WS4" firstAttribute="top" secondItem="npV-vi-XpH" secondAttribute="top" constant="5" id="G8H-MQ-dYb"/>
                                         <constraint firstAttribute="bottom" secondItem="AMV-Oj-WS4" secondAttribute="bottom" constant="5" id="LWI-rb-sq3"/>
@@ -210,7 +214,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bsW-Zc-QCI">
                                     <rect key="frame" x="24" y="35" width="66" height="30"/>
                                     <state key="normal" title="RANDOM">
-                                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                     <connections>
                                         <action selector="didPressRandom:" destination="iN0-l3-epB" eventType="touchUpInside" id="Wpb-4U-Rz9"/>
@@ -219,14 +223,13 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shK-ZG-Je8">
                                     <rect key="frame" x="135" y="35" width="30" height="30"/>
                                     <state key="normal" title="OK">
-                                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                     <connections>
                                         <action selector="didPressFinish:" destination="iN0-l3-epB" eventType="touchUpInside" id="wCN-Yp-uPw"/>
                                     </connections>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="shK-ZG-Je8" firstAttribute="centerY" secondItem="KqH-2Y-Ohh" secondAttribute="centerY" id="dQF-Oa-MNd"/>
                                 <constraint firstItem="shK-ZG-Je8" firstAttribute="centerX" secondItem="KqH-2Y-Ohh" secondAttribute="centerX" id="iqY-mP-Zqw"/>
@@ -236,20 +239,10 @@
                         </view>
                     </subviews>
                 </stackView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U1D-lq-dRr">
-                    <rect key="frame" x="4" y="4" width="30" height="38"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                    <state key="normal" title="X"/>
-                    <connections>
-                        <action selector="didPressDismiss:" destination="iN0-l3-epB" eventType="touchUpInside" id="vb7-zr-YlA"/>
-                    </connections>
-                </button>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.14901960780000001" green="0.18823529410000001" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="xRO-BB-8hS" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="53S-9b-4fn"/>
-                <constraint firstItem="U1D-lq-dRr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="6WH-RC-tIb"/>
-                <constraint firstItem="U1D-lq-dRr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="BQc-6b-Ddf"/>
                 <constraint firstAttribute="bottom" secondItem="LZz-5u-2UG" secondAttribute="bottom" id="Jam-GQ-fp5"/>
                 <constraint firstItem="xRO-BB-8hS" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="L5E-4G-Ril"/>
                 <constraint firstItem="LZz-5u-2UG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fUN-l9-YBS"/>

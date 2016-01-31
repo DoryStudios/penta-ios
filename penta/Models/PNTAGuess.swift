@@ -26,6 +26,7 @@ class PNTAGuess: PFObject {
     }
     
     var guessUploadTask: UIBackgroundTaskIdentifier?
+    var count = 0
     
     func uploadGuess() {
     
@@ -59,7 +60,24 @@ class PNTAGuess: PFObject {
         }
     
     }
-
+    
+    func checkGuess() {
+        if let string = string, let match = match {
+            var checkString: String!
+            if let fromUser = match.fromUser, let toUser = match.toUser { //unwraps when online match
+                if fromUser.madeGuess(self) {
+//                    let count = WordHelper.commonCharactersForWord(string, inMatchString: match.toUserWord!)
+                    checkString = match.toUserWord!
+                } else if toUser.madeGuess(self) {
+                    checkString = match.fromUserWord!
+                }
+            } else if match.fromUser == match.toUser { //true when solo match
+                checkString = match.fromUserWord!
+            }
+            let common = WordHelper.commonCharactersForWord(string, inMatchString: checkString)
+            count = common
+        }
+    }
 }
 
 extension PNTAGuess: PFSubclassing {

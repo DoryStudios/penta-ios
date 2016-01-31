@@ -63,11 +63,11 @@ class PNTAMainViewController: UITableViewController {
     }
     
     func pushMatch(match: PNTAMatch) {
-//        if match.isLocalMatch {
+        if match.isLocalMatch {
 //            let word = WordHelper.randomWord()
 //            match.toUserWord = word
-//            LocalMatchHelper.setMatch(match)
-//        }
+            LocalMatchHelper.setMatch(match)
+        }
         potentialMatch = match
         performSegueWithIdentifier(GAMEPLAY_SEGUE, sender: match)
     }
@@ -315,8 +315,9 @@ extension PNTAMainViewController: PNTAWordSelectorViewDelegate {
         if success {
             let word = selector.word
             let match = selector.potentialMatch
+            match.fromUserWord = word
             if match.isLocalMatch {
-                match.fromUserWord = word
+                match.toUserWord = WordHelper.randomWord()
             }
             
             pushMatch(match)
