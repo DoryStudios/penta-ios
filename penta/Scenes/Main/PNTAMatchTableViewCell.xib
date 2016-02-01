@@ -21,10 +21,10 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="played PENTA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brF-Wx-WLw">
                                 <rect key="frame" x="60" y="27" width="108" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ia5-dd-WGF">
+                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="penta-5-small" translatesAutoresizingMaskIntoConstraints="NO" id="ia5-dd-WGF">
                                 <rect key="frame" x="4" y="6" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Ql3-wu-jhJ"/>
@@ -37,13 +37,21 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11m ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ip-t7-jar">
+                                <rect key="frame" x="236" y="29" width="56" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="uS2-TV-To5" firstAttribute="leading" secondItem="ia5-dd-WGF" secondAttribute="trailing" constant="16" id="36L-Zd-CfA"/>
                             <constraint firstItem="ia5-dd-WGF" firstAttribute="centerY" secondItem="NpC-wz-yBy" secondAttribute="centerY" id="6jj-FW-dF3"/>
+                            <constraint firstItem="1Ip-t7-jar" firstAttribute="centerY" secondItem="brF-Wx-WLw" secondAttribute="centerY" id="M8I-kH-SRv"/>
                             <constraint firstItem="uS2-TV-To5" firstAttribute="top" secondItem="NpC-wz-yBy" secondAttribute="top" constant="5" id="nRc-AF-duJ"/>
                             <constraint firstItem="brF-Wx-WLw" firstAttribute="top" secondItem="uS2-TV-To5" secondAttribute="bottom" constant="1" id="rhq-JS-EII"/>
+                            <constraint firstAttribute="trailing" secondItem="1Ip-t7-jar" secondAttribute="trailing" constant="8" id="s3v-p9-PTG"/>
                             <constraint firstItem="brF-Wx-WLw" firstAttribute="leading" secondItem="uS2-TV-To5" secondAttribute="leading" id="xmr-xX-IkI"/>
                             <constraint firstItem="ia5-dd-WGF" firstAttribute="leading" secondItem="NpC-wz-yBy" secondAttribute="leading" constant="4" id="yue-PH-mlz"/>
                         </constraints>
@@ -63,4 +71,7 @@
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="penta-5-small" width="75" height="75"/>
+    </resources>
 </document>
