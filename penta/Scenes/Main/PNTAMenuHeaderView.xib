@@ -10,19 +10,30 @@
             <rect key="frame" x="0.0" y="0.0" width="300" height="100"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="penta-5-small" translatesAutoresizingMaskIntoConstraints="NO" id="V4X-Ws-KOc">
+                    <rect key="frame" x="20" y="12" width="75" height="75"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="75" id="CtT-Ag-s7x"/>
+                        <constraint firstAttribute="width" constant="75" id="DrS-PL-be0"/>
+                    </constraints>
+                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P E N T A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="paI-K4-LjY">
-                    <rect key="frame" x="82" y="38" width="136" height="25"/>
+                    <rect key="frame" x="115" y="37" width="136" height="25"/>
                     <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="25"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="V4X-Ws-KOc" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="6Yg-dd-nCT"/>
                 <constraint firstItem="paI-K4-LjY" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="GXq-KA-dMk"/>
-                <constraint firstItem="paI-K4-LjY" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ms3-xf-tT8"/>
+                <constraint firstItem="paI-K4-LjY" firstAttribute="leading" secondItem="V4X-Ws-KOc" secondAttribute="trailing" constant="20" id="bxP-xK-Qdd"/>
+                <constraint firstItem="V4X-Ws-KOc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="wJu-vQ-FSV"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
+    <resources>
+        <image name="penta-5-small" width="75" height="75"/>
+    </resources>
 </document>

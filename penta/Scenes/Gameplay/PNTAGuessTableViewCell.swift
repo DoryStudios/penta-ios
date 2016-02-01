@@ -21,6 +21,9 @@ class PNTAGuessTableViewCell: UITableViewCell {
     var count = 0 {
         didSet {
             guessCountLabel.text = "\(count)"
+            if let image = UIImage(named: "penta-\(count)-small") {
+                guessIndicator.image = image
+            }
         }
     }
 
