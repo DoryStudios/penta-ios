@@ -12,6 +12,24 @@ class PNTAMatchTableViewCell: UITableViewCell {
 
     @IBOutlet weak var tileView: UIView!
     @IBOutlet weak var opponentNameLabel: UILabel!
+    @IBOutlet weak var lastGuessLabel: UILabel!
+    
+    var match: PNTAMatch! {
+        didSet {
+            if let match = match {
+                if match.isLocalMatch {
+                    opponentNameLabel.text = "Computer"
+                } else {
+                    //determine correct user, grab name
+                }
+                
+                if let lastGuess = match.lastGuess {
+                    lastGuessLabel.text = "last guess \(lastGuess.string!)"
+                }
+                
+            }
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

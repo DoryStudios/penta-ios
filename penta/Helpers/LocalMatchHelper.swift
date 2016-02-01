@@ -27,7 +27,7 @@ struct LocalMatchHelper {
         if let dict = defaults.dictionaryForKey(MATCH_OFFLINE_KEY) {
             match.fromUserWord = dict[PARSE_FROM_USER_WORD_KEY] as? String
             match.toUserWord = dict[PARSE_TO_USER_WORD_KEY] as? String
-            
+            match.isLocalMatch = true
             let guesses = getGuesses()
             match.guesses = guesses
         }

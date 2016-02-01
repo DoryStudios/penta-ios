@@ -185,6 +185,19 @@ class PNTAMainViewController: UITableViewController {
                     }
                 }
                 
+                let row = indexPath.row
+                var match: PNTAMatch? = nil
+                
+                if indexPath.section == 1 {
+                    match = activeMatches[row]
+                } else if indexPath.section == 2 {
+                    match = pendingMatches[row]
+                }
+                
+                if let match = match, let cell = cell as? PNTAMatchTableViewCell {
+                    cell.match = match
+                }
+                
                 if hasActiveMatches {
                 
                 }

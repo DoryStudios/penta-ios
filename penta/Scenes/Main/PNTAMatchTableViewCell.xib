@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -17,8 +18,21 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NpC-wz-yBy">
                         <rect key="frame" x="10" y="9" width="300" height="51"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="played PENTA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brF-Wx-WLw">
+                                <rect key="frame" x="60" y="27" width="108" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ia5-dd-WGF">
+                                <rect key="frame" x="4" y="6" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Ql3-wu-jhJ"/>
+                                    <constraint firstAttribute="width" secondItem="ia5-dd-WGF" secondAttribute="height" multiplier="1:1" id="zVI-Xp-Tc2"/>
+                                </constraints>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opponent Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uS2-TV-To5">
-                                <rect key="frame" x="20" y="15" width="126" height="21"/>
+                                <rect key="frame" x="60" y="5" width="126" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -26,8 +40,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="uS2-TV-To5" firstAttribute="leading" secondItem="NpC-wz-yBy" secondAttribute="leading" constant="20" id="FgH-7y-ciI"/>
-                            <constraint firstItem="uS2-TV-To5" firstAttribute="centerY" secondItem="NpC-wz-yBy" secondAttribute="centerY" id="z8M-BR-FKm"/>
+                            <constraint firstItem="uS2-TV-To5" firstAttribute="leading" secondItem="ia5-dd-WGF" secondAttribute="trailing" constant="16" id="36L-Zd-CfA"/>
+                            <constraint firstItem="ia5-dd-WGF" firstAttribute="centerY" secondItem="NpC-wz-yBy" secondAttribute="centerY" id="6jj-FW-dF3"/>
+                            <constraint firstItem="uS2-TV-To5" firstAttribute="top" secondItem="NpC-wz-yBy" secondAttribute="top" constant="5" id="nRc-AF-duJ"/>
+                            <constraint firstItem="brF-Wx-WLw" firstAttribute="top" secondItem="uS2-TV-To5" secondAttribute="bottom" constant="1" id="rhq-JS-EII"/>
+                            <constraint firstItem="brF-Wx-WLw" firstAttribute="leading" secondItem="uS2-TV-To5" secondAttribute="leading" id="xmr-xX-IkI"/>
+                            <constraint firstItem="ia5-dd-WGF" firstAttribute="leading" secondItem="NpC-wz-yBy" secondAttribute="leading" constant="4" id="yue-PH-mlz"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -39,6 +57,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="lastGuessLabel" destination="brF-Wx-WLw" id="ENI-RG-YNL"/>
                 <outlet property="opponentNameLabel" destination="uS2-TV-To5" id="8WW-nF-kUT"/>
                 <outlet property="tileView" destination="NpC-wz-yBy" id="vJw-cl-HcR"/>
             </connections>
