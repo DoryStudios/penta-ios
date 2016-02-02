@@ -84,6 +84,10 @@ class PNTAMainViewController: UITableViewController {
             pendingMatches.removeAtIndex(index)
         }
         
+        if match.isLocalMatch {
+            LocalMatchHelper.clearMatch()
+        }
+        
         tableView.reloadData()
     }
     

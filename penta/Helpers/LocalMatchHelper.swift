@@ -20,6 +20,14 @@ struct LocalMatchHelper {
         return value
     }
     
+    static func clearMatch() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey(MATCH_OFFLINE_KEY)
+        defaults.removeObjectForKey(PENTA_SOLO_GUESSES)
+        defaults.setBool(false, forKey: MATCH_HAS_ACTIVE_OFFLINE_KEY)
+        defaults.synchronize()
+    }
+    
     static func getMatch() -> PNTAMatch {
         let match = PNTAMatch()
         let defaults = NSUserDefaults.standardUserDefaults()
