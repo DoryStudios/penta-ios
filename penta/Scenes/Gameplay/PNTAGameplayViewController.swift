@@ -51,7 +51,13 @@ class PNTAGameplayViewController: UIViewController {
     var wordSelector: PNTAWordSelectorView?
     
     var isLocalMatch: Bool = false
-    var isActiveGame: Bool = true
+    var isActiveGame: Bool = true {
+        didSet {
+            if !isActiveGame {
+                
+            }
+        }
+    }
     
     func pushGuess(guess: PNTAGuess) {
         match.guesses.append(guess)
@@ -173,7 +179,6 @@ class PNTAGameplayViewController: UIViewController {
     //MARK: - Navigation method
 
     @IBAction override func unwindForSegue(unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
-        
     }
     
     //MARK: IBAction methods
@@ -302,6 +307,7 @@ extension PNTAGameplayViewController: PNTAWordSelectorViewDelegate {
 extension PNTAGameplayViewController: PNTAMatchEndViewDelegate {
     func matchEndViewDidFinish(view: PNTAMatchEndView) {
         view.removeFromSuperview()
+        performSegueWithIdentifier("toMain", sender: self)
     }
     
     func matchEndViewShouldFinish(view: PNTAMatchEndView) -> Bool {

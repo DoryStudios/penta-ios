@@ -221,7 +221,7 @@ class PNTAMainViewController: UITableViewController {
         switch section {
             case 0:
                 //call to action button
-                let addSocialButton = isLinkedToFacebook ? 0 : 1
+                let addSocialButton = isLinkedToFacebook ? 0 : 0
                 return 1 + addSocialButton
             
             case 1:
@@ -258,6 +258,13 @@ class PNTAMainViewController: UITableViewController {
                     vw.frame = rect
                     titleView = vw
                 }
+            } else if !hasPendingMatches && !hasActiveMatches {
+                let arr = NSBundle.mainBundle().loadNibNamed("PNTAMatchHeaderView", owner: self, options: nil)
+                if let vw = arr[0] as? UIView, let label = vw.viewWithTag(42) as? UILabel {
+                    vw.frame = rect
+                    label.text = "Click Quick Start to Play!"
+                    titleView = vw
+                }
             } else {
                 titleView = UIView(frame: CGRectZero)
             }
@@ -288,10 +295,11 @@ class PNTAMainViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let hasPendingMatches = !self.pendingMatches.isEmpty
         let hasActiveMatches = !self.activeMatches.isEmpty
+        let hasNoMatches = !hasActiveMatches && !hasPendingMatches
         
         if section == 0 {
             return 100.0
-        } else if (section == 1 && hasActiveMatches) || (section == 2 && hasPendingMatches) {
+        } else if (section == 1 && (hasActiveMatches || hasNoMatches)) || (section == 2 && hasPendingMatches) {
             return 30.0
         } else {
             return CGFloat.min
