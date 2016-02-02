@@ -23,6 +23,8 @@ class PNTAMatchEndView: UIView {
     
     func prepare() {
         containerView.center = CGPointMake(center.x, center.y*3)
+        containerView.layer.borderColor = UIColor.groupTableViewBackgroundColor().CGColor
+        containerView.layer.borderWidth = 1.0
     }
     
     func appear() {
