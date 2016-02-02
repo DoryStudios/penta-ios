@@ -33,6 +33,10 @@ struct LocalMatchHelper {
         }
         match.isLocalMatch = true
         
+        if match.guesses.count > 0 {
+            match.lastGuess = match.guesses.last
+        }
+        
         return match
     }
     

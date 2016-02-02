@@ -54,13 +54,13 @@ class PNTAGameplayViewController: UIViewController {
     var isActiveGame: Bool = true {
         didSet {
             if !isActiveGame {
-                
+            
             }
         }
     }
     
     func pushGuess(guess: PNTAGuess) {
-        match.guesses.append(guess)
+        match.appendGuess(guess)
         playerGuesses.append(guess)
         playerTable.reloadData()
         
@@ -81,7 +81,7 @@ class PNTAGameplayViewController: UIViewController {
             let opponentWord = WordHelper.randomWord()
             let opponentGuess = PNTAGuess()
             opponentGuess.string = opponentWord
-            match.guesses.append(opponentGuess)
+            match.appendGuess(opponentGuess)
             opponentGuesses.append(opponentGuess)
             opponentTable.reloadData()
             LocalMatchHelper.setGuesses(match.guesses)

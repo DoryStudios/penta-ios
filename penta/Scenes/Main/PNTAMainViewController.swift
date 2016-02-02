@@ -58,6 +58,10 @@ class PNTAMainViewController: UITableViewController {
         updateTable()
     }
     
+    func updateMatches() {
+        
+    }
+    
     func updateTable() {
         tableView.reloadData()
     }
@@ -126,6 +130,10 @@ class PNTAMainViewController: UITableViewController {
             updateTable()
         }
         
+        if LocalMatchHelper.hasSoloMatch() {
+            let match = LocalMatchHelper.getMatch()
+            activeMatches.append(match)
+        }
 //        if let nc = self.navigationController {
 //            nc.setNavigationBarHidden(true, animated: false)
 //        }
@@ -137,11 +145,7 @@ class PNTAMainViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if LocalMatchHelper.hasSoloMatch() {
-            let match = LocalMatchHelper.getMatch()
-            activeMatches.append(match)
-        }
+        tableView.reloadData()
     }
     
     //MARK: - Navigation method

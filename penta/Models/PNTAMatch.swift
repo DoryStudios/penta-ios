@@ -88,6 +88,14 @@ class PNTAMatch: PFObject {
             }
         }
     }
+    
+    func appendGuess(guess: PNTAGuess) {
+        guesses.append(guess)
+        lastGuess = guess
+        if isLocalMatch {
+            LocalMatchHelper.setGuesses(guesses)
+        }
+    }
 }
 
 extension PNTAMatch: PFSubclassing {
