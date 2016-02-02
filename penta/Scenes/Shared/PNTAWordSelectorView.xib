@@ -10,7 +10,7 @@
             <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xRO-BB-8hS">
+                <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xRO-BB-8hS">
                     <rect key="frame" x="137" y="135" width="25" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -39,6 +39,7 @@
                                 </button>
                             </subviews>
                             <constraints>
+                                <constraint firstAttribute="height" constant="100" id="70Y-C9-FXK"/>
                                 <constraint firstItem="jOP-19-bq7" firstAttribute="centerY" secondItem="tHG-bi-wXt" secondAttribute="centerY" id="JNz-5H-b21"/>
                                 <constraint firstItem="jOP-19-bq7" firstAttribute="centerX" secondItem="tHG-bi-wXt" secondAttribute="centerX" id="QbY-mU-xNI"/>
                             </constraints>
@@ -207,12 +208,19 @@
                                     </constraints>
                                 </view>
                             </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="48q-y8-CpH"/>
+                            </constraints>
                         </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KqH-2Y-Ohh">
                             <rect key="frame" x="0.0" y="200" width="300" height="100"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bsW-Zc-QCI">
-                                    <rect key="frame" x="24" y="35" width="66" height="30"/>
+                                    <rect key="frame" x="55" y="30" width="70" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="70" id="L02-EH-NiC"/>
+                                        <constraint firstAttribute="height" constant="40" id="n0Q-Tk-6Xs"/>
+                                    </constraints>
                                     <state key="normal" title="RANDOM">
                                         <color key="titleColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
@@ -220,8 +228,19 @@
                                         <action selector="didPressRandom:" destination="iN0-l3-epB" eventType="touchUpInside" id="Wpb-4U-Rz9"/>
                                     </connections>
                                 </button>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Thg-fL-Lss">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="0.0"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" id="cIr-uX-cVd"/>
+                                    </constraints>
+                                </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shK-ZG-Je8">
-                                    <rect key="frame" x="135" y="35" width="30" height="30"/>
+                                    <rect key="frame" x="175" y="30" width="70" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="70" id="70Z-Bf-mef"/>
+                                        <constraint firstAttribute="height" constant="40" id="aa8-KN-Cb4"/>
+                                    </constraints>
                                     <state key="normal" title="OK">
                                         <color key="titleColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
@@ -231,13 +250,20 @@
                                 </button>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="shK-ZG-Je8" firstAttribute="centerY" secondItem="KqH-2Y-Ohh" secondAttribute="centerY" id="dQF-Oa-MNd"/>
-                                <constraint firstItem="shK-ZG-Je8" firstAttribute="centerX" secondItem="KqH-2Y-Ohh" secondAttribute="centerX" id="iqY-mP-Zqw"/>
-                                <constraint firstItem="shK-ZG-Je8" firstAttribute="leading" secondItem="bsW-Zc-QCI" secondAttribute="trailing" constant="45" id="obA-CW-4cu"/>
+                                <constraint firstItem="Thg-fL-Lss" firstAttribute="top" secondItem="KqH-2Y-Ohh" secondAttribute="top" id="GsC-x0-Qbn"/>
+                                <constraint firstItem="shK-ZG-Je8" firstAttribute="top" secondItem="Thg-fL-Lss" secondAttribute="bottom" constant="30" id="Kw7-1j-QgP"/>
+                                <constraint firstAttribute="height" constant="100" id="OCw-sc-jYV"/>
+                                <constraint firstItem="Thg-fL-Lss" firstAttribute="width" secondItem="KqH-2Y-Ohh" secondAttribute="width" id="Xfz-3F-J2X"/>
+                                <constraint firstAttribute="bottom" secondItem="shK-ZG-Je8" secondAttribute="bottom" constant="30" id="gMC-OK-dVv"/>
+                                <constraint firstItem="Thg-fL-Lss" firstAttribute="centerX" secondItem="KqH-2Y-Ohh" secondAttribute="centerX" id="hIB-Hp-rCt"/>
                                 <constraint firstItem="bsW-Zc-QCI" firstAttribute="centerY" secondItem="shK-ZG-Je8" secondAttribute="centerY" id="vII-Ty-9f5"/>
                             </constraints>
                         </view>
                     </subviews>
+                    <constraints>
+                        <constraint firstItem="shK-ZG-Je8" firstAttribute="centerX" secondItem="hjb-aD-ayd" secondAttribute="centerX" id="1YE-Dx-X13"/>
+                        <constraint firstItem="bsW-Zc-QCI" firstAttribute="centerX" secondItem="QMd-cz-eDD" secondAttribute="centerX" id="6BW-Tm-0ES"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <color key="backgroundColor" red="0.14901960780000001" green="0.18823529410000001" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -252,7 +278,9 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="blindField" destination="xRO-BB-8hS" id="ltw-3h-wkQ"/>
+                <outlet property="helpContainerHeightConstraint" destination="cIr-uX-cVd" id="p8g-30-La4"/>
             </connections>
+            <point key="canvasLocation" x="139" y="300"/>
         </view>
     </objects>
 </document>

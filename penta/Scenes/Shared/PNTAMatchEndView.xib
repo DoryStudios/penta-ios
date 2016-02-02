@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PNTAMatchEndView" customModule="penta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="408" height="382"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2gX-8E-XyP">
+                    <rect key="frame" x="30" y="30" width="348" height="322"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="penta-5" translatesAutoresizingMaskIntoConstraints="NO" id="YlH-Wl-U97">
+                            <rect key="frame" x="74" y="38" width="200" height="200"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="200" id="K5N-HE-7zC"/>
+                                <constraint firstAttribute="width" constant="200" id="RYZ-GN-Jhm"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Winner Winner!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P44-D6-ivU">
+                            <rect key="frame" x="115" y="249" width="118" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="YlH-Wl-U97" firstAttribute="top" secondItem="2gX-8E-XyP" secondAttribute="top" constant="38" id="7mf-CL-c77"/>
+                        <constraint firstItem="YlH-Wl-U97" firstAttribute="centerX" secondItem="2gX-8E-XyP" secondAttribute="centerX" id="IHr-ED-NWT"/>
+                        <constraint firstAttribute="bottom" secondItem="P44-D6-ivU" secondAttribute="bottom" constant="52" id="e0e-nt-0yb"/>
+                        <constraint firstItem="P44-D6-ivU" firstAttribute="centerX" secondItem="2gX-8E-XyP" secondAttribute="centerX" id="lbJ-ar-7Mi"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="2gX-8E-XyP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="7nd-iF-zFl"/>
+                <constraint firstItem="2gX-8E-XyP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="C37-Gw-HpI"/>
+                <constraint firstAttribute="trailing" secondItem="2gX-8E-XyP" secondAttribute="trailing" constant="30" id="kyL-g6-RQN"/>
+                <constraint firstAttribute="bottom" secondItem="2gX-8E-XyP" secondAttribute="bottom" constant="30" id="l03-kM-4nV"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="containerView" destination="2gX-8E-XyP" id="COm-Ks-NvT"/>
+            </connections>
+            <point key="canvasLocation" x="180" y="189"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="penta-5" width="512" height="512"/>
+    </resources>
+</document>

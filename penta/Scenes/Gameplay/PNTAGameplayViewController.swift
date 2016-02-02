@@ -51,6 +51,7 @@ class PNTAGameplayViewController: UIViewController {
     var wordSelector: PNTAWordSelectorView?
     
     var isLocalMatch: Bool = false
+    var isActiveGame: Bool = true
     
     func pushGuess(guess: PNTAGuess) {
         match.guesses.append(guess)
@@ -61,11 +62,16 @@ class PNTAGameplayViewController: UIViewController {
             let index = WordHelper.characterStrengthIndexFromGuesses(playerGuesses)
             print("\(index)")
         }
+        
+        if playerDidWinMatch(match, withGuess: guess) {
+            isActiveGame = false
+            showMatchEnd(true)
+        }
 
         let indexPath = NSIndexPath(forRow: playerGuesses.count-1, inSection: 0)
         playerTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
         
-        if isLocalMatch {
+        if isLocalMatch && isActiveGame {
             let opponentWord = WordHelper.randomWord()
             let opponentGuess = PNTAGuess()
             opponentGuess.string = opponentWord
@@ -85,6 +91,18 @@ class PNTAGameplayViewController: UIViewController {
     
     func addGuess(guess: PNTAGuess, toTable table:UITableView) {
         
+    }
+    
+    func playerDidWinMatch(match: PNTAMatch, withGuess guess: PNTAGuess) -> Bool {
+        if let toWord = match.toUserWord, let fromWord = match.fromUserWord, let guessWord = guess.string {
+            if match.isLocalMatch && guessWord == toWord {
+                return true
+            } else { //determine which word is opponents, then check
+                return false
+            }
+        } else {
+            return false
+        }
     }
     
     func showWordSelector() {
@@ -116,6 +134,19 @@ class PNTAGameplayViewController: UIViewController {
         let point = CGPointMake(view.center.x, view.frame.size.height*1.2)
         if let selector = wordSelector {
             selector.animateCenterToPoint(point, enableEntry: false)
+        }
+    }
+    
+    func showMatchEnd(didWin: Bool) {
+        let nibs = NSBundle.mainBundle().loadNibNamed("PNTAMatchEndView", owner: self, options: nil)
+        if nibs.count > 0 {
+            if let matchEndView = nibs[0] as? PNTAMatchEndView {
+                matchEndView.frame = view.frame
+                matchEndView.prepare()
+                matchEndView.delegate = self
+                view.addSubview(matchEndView)
+                matchEndView.appear()
+            }
         }
     }
     
@@ -265,5 +296,15 @@ extension PNTAGameplayViewController: PNTAWordSelectorViewDelegate {
         } else {
             return false
         }
+    }
+}
+
+extension PNTAGameplayViewController: PNTAMatchEndViewDelegate {
+    func matchEndViewDidFinish(view: PNTAMatchEndView) {
+        view.removeFromSuperview()
+    }
+    
+    func matchEndViewShouldFinish(view: PNTAMatchEndView) -> Bool {
+        return true
     }
 }

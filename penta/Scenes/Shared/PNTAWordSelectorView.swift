@@ -32,6 +32,7 @@ class PNTAWordSelectorView: UIView {
     var state: PNTAWordSelectorViewState = .Idle
     var delegate: PNTAWordSelectorViewDelegate?
 
+    @IBOutlet weak var helpContainerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var blindField: UITextField!
     
     @IBAction func didPressFinish(sender: AnyObject) {
@@ -56,10 +57,18 @@ class PNTAWordSelectorView: UIView {
             let char = chars[i]
             label.text = "\(char)"
         }
+        
+        helpContainerHeightConstraint.constant = 40
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.layoutIfNeeded()
+        }
     }
     
     func prepare() {
         blindField.delegate = self
+        
+        helpContainerHeightConstraint.constant = 0
+        layoutIfNeeded()
         
         for var i = 0; i < 15; i++ {
             var tag = i + LABEL_TAG_OFFSET
