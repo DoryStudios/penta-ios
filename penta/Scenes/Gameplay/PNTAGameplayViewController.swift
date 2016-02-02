@@ -41,6 +41,7 @@ class PNTAGameplayViewController: UIViewController {
                 
                 }
             }
+            
             self.isLocalMatch = match.isLocalMatch
         }
     }
@@ -50,6 +51,7 @@ class PNTAGameplayViewController: UIViewController {
     
     var wordSelector: PNTAWordSelectorView?
     
+    var didFinishGame: Bool = false
     var isLocalMatch: Bool = false
     var isActiveGame: Bool = true {
         didSet {
@@ -71,6 +73,7 @@ class PNTAGameplayViewController: UIViewController {
         
         if playerDidWinMatch(match, withGuess: guess) {
             isActiveGame = false
+            didFinishGame = true
             showMatchEnd(true)
         }
 
@@ -179,6 +182,12 @@ class PNTAGameplayViewController: UIViewController {
     //MARK: - Navigation method
 
     @IBAction override func unwindForSegue(unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
+    
+        if let vc = unwindSegue.destinationViewController as? PNTAMainViewController {
+            if didFinishGame {
+                vc.endMatch(match)
+            }
+        }
     }
     
     //MARK: IBAction methods
