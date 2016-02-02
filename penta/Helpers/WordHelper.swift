@@ -77,6 +77,16 @@ struct WordHelper {
         return result.joinWithSeparator("").characters.count
     }
     
+    static func calculateWordStrength(word: String, fromIndex index: Dictionary<Character, Int>) -> Int {
+        var strength = 0
+        for char in word.characters {
+            if let value = index[char] {
+                strength += value
+            }
+        }
+        return strength
+    }
+    
     static func possibleWordsFromGuesses(guesses: [PNTAGuess]) -> [String] {
         var words: [String] = []
         let index = characterStrengthIndexFromGuesses(guesses)
