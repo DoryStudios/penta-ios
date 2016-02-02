@@ -31,8 +31,10 @@ class PNTAGameplayViewController: UIViewController {
                 let guess = match.guesses[i]
                 if match.isLocalMatch {
                     if i % 2 == 0 {
+                        guess.count = WordHelper.commonCharactersForWord(guess.string!, inMatchString: match.toUserWord!)
                         playerGuesses.append(guess)
                     } else {
+                        guess.count = WordHelper.commonCharactersForWord(guess.string!, inMatchString: match.fromUserWord!)
                         opponentGuesses.append(guess)
                     }
                 } else { //compare PFUser
@@ -54,6 +56,11 @@ class PNTAGameplayViewController: UIViewController {
         match.guesses.append(guess)
         playerGuesses.append(guess)
         playerTable.reloadData()
+        
+        if playerGuesses.count > 4 {
+            let index = WordHelper.characterStrengthIndexFromGuesses(playerGuesses)
+            print("\(index)")
+        }
 
         let indexPath = NSIndexPath(forRow: playerGuesses.count-1, inSection: 0)
         playerTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)

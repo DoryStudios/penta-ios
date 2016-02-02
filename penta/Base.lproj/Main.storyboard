@@ -27,7 +27,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P7Y-bP-D8K">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nQ5-9d-yQU">
+                                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="penta-5-small" translatesAutoresizingMaskIntoConstraints="NO" id="nQ5-9d-yQU">
                                                 <rect key="frame" x="523" y="3" width="74" height="74"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="nQ5-9d-yQU" secondAttribute="height" multiplier="1:1" id="7B8-GO-PpO"/>
@@ -94,7 +94,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XEo-8Q-pCp">
                                         <rect key="frame" x="0.0" y="500" width="600" height="80"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B1q-g1-7GX">
+                                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="penta-5-small" translatesAutoresizingMaskIntoConstraints="NO" id="B1q-g1-7GX">
                                                 <rect key="frame" x="3" y="3" width="74" height="74"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="B1q-g1-7GX" secondAttribute="height" multiplier="1:1" id="zm8-P0-0ru"/>
@@ -214,6 +214,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="penta-5-small" width="75" height="75"/>
         <image name="penta-bg" width="768" height="1024"/>
     </resources>
 </document>
