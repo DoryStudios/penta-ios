@@ -58,10 +58,6 @@ class PNTAMainViewController: UITableViewController {
         updateTable()
     }
     
-    func updateMatches() {
-        
-    }
-    
     func updateTable() {
         tableView.reloadData()
     }
@@ -74,6 +70,21 @@ class PNTAMainViewController: UITableViewController {
         }
         potentialMatch = match
         performSegueWithIdentifier(GAMEPLAY_SEGUE, sender: match)
+    }
+    
+    func updateMatch(match: PNTAMatch) {
+    
+    }
+    
+    func endMatch(match: PNTAMatch) {
+        
+        if let index = activeMatches.indexOf(match) {
+            activeMatches.removeAtIndex(index)
+        } else if let index = pendingMatches.indexOf(match) {
+            pendingMatches.removeAtIndex(index)
+        }
+        
+        tableView.reloadData()
     }
     
     func showWordSelectorForMatch(match: PNTAMatch) {
