@@ -71,6 +71,10 @@ class PNTAGameplayViewController: UIViewController {
             print("\(index)")
         }
         
+        if AdHelper.shouldServeAd() {
+            AdHelper.serveInterstitialAd()
+        }
+        
         if playerDidWinMatch(match, withGuess: guess) {
             isActiveGame = false
             didFinishGame = true

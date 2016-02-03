@@ -7,6 +7,8 @@
 //
 
 #import "Lexicontext.h"
+#import "ALSwiftHeaders.h"
+
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
