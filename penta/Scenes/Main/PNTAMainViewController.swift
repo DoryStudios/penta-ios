@@ -81,7 +81,13 @@ class PNTAMainViewController: UITableViewController {
     }
     
     func updateMatch(match: PNTAMatch) {
-    
+        if let index = pendingMatches.indexOf(match) {
+            pendingMatches.removeAtIndex(index)
+        } else if let index = activeMatches.indexOf(match) {
+            activeMatches.removeAtIndex(index)
+        }
+        
+        filterMatches([match])
     }
     
     func endMatch(match: PNTAMatch) {

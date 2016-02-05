@@ -198,6 +198,8 @@ class PNTAGameplayViewController: UIViewController {
         if let vc = unwindSegue.destinationViewController as? PNTAMainViewController {
             if didFinishGame {
                 vc.endMatch(match)
+            } else {
+                vc.updateMatch(match)
             }
         }
     }
