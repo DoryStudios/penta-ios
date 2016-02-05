@@ -36,6 +36,7 @@ struct LocalMatchHelper {
             match.fromUserWord = dict[PARSE_FROM_USER_WORD_KEY] as? String
             match.toUserWord = dict[PARSE_TO_USER_WORD_KEY] as? String
             match.isLocalMatch = true
+            match.isFinished = dict[PARSE_MATCH_ISFINISHED_KEY] as? Bool ?? false
             let guesses = getGuesses()
             match.guesses = guesses
         }
@@ -54,6 +55,7 @@ struct LocalMatchHelper {
         
         dict[PARSE_FROM_USER_WORD_KEY] = match.fromUserWord
         dict[PARSE_TO_USER_WORD_KEY] = match.toUserWord
+        dict[PARSE_MATCH_ISFINISHED_KEY] = match.isFinished
         
         defaults.setBool(true, forKey: MATCH_HAS_ACTIVE_OFFLINE_KEY)
         defaults.setObject(dict, forKey: MATCH_OFFLINE_KEY)
