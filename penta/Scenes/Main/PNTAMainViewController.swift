@@ -44,14 +44,22 @@ class PNTAMainViewController: UITableViewController {
     func filterMatches(matches: [PNTAMatch]) {
         
         for match in matches {
-            if let lastGuess = match.lastGuess, let user = PFUser.currentUser() {
-                if user.madeGuess(lastGuess) {
-                    pendingMatches.append(match)
-                } else {
-                    activeMatches.append(match)
+            if !match.isFinished {
+                if let lastGuess = match.lastGuess, let user = PFUser.currentUser() {
+                    if user.madeGuess(lastGuess) {
+                        pendingMatches.append(match)
+                    } else {
+                        activeMatches.append(match)
+                    }
+                } else if match.isLocalMatch {
+                    if match.guesses.count % 2 == 0 {
+                        activeMatches.append(match)
+                    } else {
+                        pendingMatches.append(match)
+                    }
+                } else { //no lastGuess, match waiting for user to acknowledge
+                    
                 }
-            } else { //no lastGuess, match waiting for user to acknowledge
-            
             }
         }
         
@@ -146,8 +154,8 @@ class PNTAMainViewController: UITableViewController {
         }
         
         if LocalMatchHelper.hasSoloMatch() {
-            let match = LocalMatchHelper.getMatch()
-            activeMatches.append(match)
+            let matches = LocalMatchHelper.fetchMatches()
+            filterMatches(matches)
         }
 //        if let nc = self.navigationController {
 //            nc.setNavigationBarHidden(true, animated: false)

@@ -9,7 +9,11 @@
 import Foundation
 
 let PENTA_SOLO_GUESSES = "Solo Play Guesses"
+let PENTA_SOLO_MATCHES = "Penta Solo Matches"
+let PENTA_OFFLINE_MATCH_ID = "Penta Match Offline ID"
+
 let MATCH_OFFLINE_KEY = "Penta Single Player"
+
 let MATCH_HAS_ACTIVE_OFFLINE_KEY = "Active Single Player"
 
 struct LocalMatchHelper {
@@ -32,22 +36,32 @@ struct LocalMatchHelper {
         let match = PNTAMatch()
         match.isLocalMatch = true
         match.isFinished = false
+        match.objectId = NSUUID().UUIDString
         return match
     }
     
-    static func getMatch() -> PNTAMatch {
+    static func getMatchById(uuid: String) -> PNTAMatch {
         let match = PNTAMatch()
         let defaults = NSUserDefaults.standardUserDefaults()
         
-        if let dict = defaults.dictionaryForKey(MATCH_OFFLINE_KEY) {
+        if let dict = defaults.dictionaryForKey(uuid) {
             match.fromUserWord = dict[PARSE_FROM_USER_WORD_KEY] as? String
             match.toUserWord = dict[PARSE_TO_USER_WORD_KEY] as? String
             match.isLocalMatch = true
             match.isFinished = dict[PARSE_MATCH_ISFINISHED_KEY] as? Bool ?? false
-            let guesses = getGuesses()
-            match.guesses = guesses
+            match.objectId = uuid
+            match.guesses = []
+            
+            if let arr = dict["Guesses"] as? [String] {
+                for word in arr {
+                    let guess = PNTAGuess()
+                    guess.string = word
+                    match.guesses.append(guess)
+                }
+            }
+//            let guesses = getGuesses()
+//            match.guesses = guesses
         }
-        match.isLocalMatch = true
         
         if match.guesses.count > 0 {
             match.lastGuess = match.guesses.last
@@ -60,13 +74,29 @@ struct LocalMatchHelper {
         let defaults = NSUserDefaults.standardUserDefaults()
         var dict: [String: AnyObject] = [:]
         
-        dict[PARSE_FROM_USER_WORD_KEY] = match.fromUserWord
-        dict[PARSE_TO_USER_WORD_KEY] = match.toUserWord
-        dict[PARSE_MATCH_ISFINISHED_KEY] = match.isFinished
-        
-        defaults.setBool(true, forKey: MATCH_HAS_ACTIVE_OFFLINE_KEY)
-        defaults.setObject(dict, forKey: MATCH_OFFLINE_KEY)
-        defaults.synchronize()
+        if let uuid = match.objectId {
+            dict[PARSE_FROM_USER_WORD_KEY] = match.fromUserWord
+            dict[PARSE_TO_USER_WORD_KEY] = match.toUserWord
+            dict[PARSE_MATCH_ISFINISHED_KEY] = match.isFinished
+            
+            var arr: [String] = []
+            for guess in match.guesses {
+                let string = guess.string
+                arr.append(string!)
+            }
+            dict["Guesses"] = arr
+            
+            defaults.setBool(true, forKey: MATCH_HAS_ACTIVE_OFFLINE_KEY)
+            defaults.setObject(dict, forKey: uuid)
+            defaults.synchronize()
+            
+            let matchStrings = defaults.arrayForKey(PENTA_SOLO_MATCHES) as? [String] ?? []
+            if !matchStrings.contains(uuid) {
+                var newStrings = Array(matchStrings)
+                newStrings.append(uuid)
+                defaults.setObject(newStrings, forKey: PENTA_SOLO_MATCHES)
+            }
+        }
     }
     
     static func getGuesses() -> [PNTAGuess] {
@@ -96,6 +126,20 @@ struct LocalMatchHelper {
         
         defaults.setObject(arr, forKey: PENTA_SOLO_GUESSES)
         defaults.synchronize()
+    }
+    
+    static func fetchMatches() -> [PNTAMatch] {
+        var matches: [PNTAMatch] = []
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let matchStrings = defaults.arrayForKey(PENTA_SOLO_MATCHES) as? [String] {
+            for string in matchStrings {
+                let match = getMatchById(string)
+                matches.append(match)
+            }
+        }
+        
+        return matches
     }
     
 }
