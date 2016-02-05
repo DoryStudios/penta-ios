@@ -90,8 +90,25 @@ struct WordHelper {
     static func possibleWordsFromGuesses(guesses: [PNTAGuess]) -> [String] {
         var words: [String] = []
         let index = characterStrengthIndexFromGuesses(guesses)
+        var localMax = 0
         
+        for var i = 0; i < 10; i++ {
+            let word = randomWord()
+            let strength = calculateWordStrength(word, fromIndex: index)
+            if strength > localMax {
+                localMax = strength
+            }
+        }
         
+        var count = 0
+        while words.count < 2 || count < 25 {
+            let word = randomWord()
+            let strength = calculateWordStrength(word, fromIndex: index)
+            if strength > localMax {
+                words.append(word)
+            }
+            count++
+        }
         
         return words
     }
