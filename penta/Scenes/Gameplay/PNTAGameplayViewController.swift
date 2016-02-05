@@ -92,6 +92,8 @@ class PNTAGameplayViewController: UIViewController {
             opponentGuesses.append(opponentGuess)
             opponentTable.reloadData()
             LocalMatchHelper.setMatch(match)
+            let indexPath = NSIndexPath(forRow: opponentGuesses.count-1, inSection: 0)
+            opponentTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
         } else { //submit online
             if let match = match, let user = PFUser.currentUser() {
                 guess.match = match
