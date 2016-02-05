@@ -71,14 +71,14 @@ class PNTAGameplayViewController: UIViewController {
             print("\(index)")
         }
         
-        if AdHelper.shouldServeAd() {
-            AdHelper.serveInterstitialAd()
-        }
-        
         if playerDidWinMatch(match, withGuess: guess) {
             isActiveGame = false
             didFinishGame = true
             showMatchEnd(true)
+        } else {
+            if AdHelper.shouldServeAd() {
+                AdHelper.serveInterstitialAd()
+            }
         }
 
         let indexPath = NSIndexPath(forRow: playerGuesses.count-1, inSection: 0)
@@ -171,11 +171,19 @@ class PNTAGameplayViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        playButton.layer.cornerRadius = 6.0
+        playButton.layer.borderColor = UIColor.groupTableViewBackgroundColor().CGColor
+        playButton.layer.borderWidth = 1.0
         
         if match.isLocalMatch {
             if let word = match.fromUserWord, let label = playerWordLabel {
                 label.text = "using \(word)"
             }
+        }
+        
+        if match.isFinished {
+            isActiveGame = false
+            
         }
     }
     
@@ -258,25 +266,25 @@ extension PNTAGameplayViewController: UITableViewDataSource {
 }
 
 extension PNTAGameplayViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        let cellContentView  = cell.contentView;
-        let rotationAngleDegrees = -30.0;
-        let rotationAngleRadians = rotationAngleDegrees * (M_PI/180);
+//    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+//        let cellContentView  = cell.contentView;
+//        let rotationAngleDegrees = -30.0;
+//        let rotationAngleRadians = rotationAngleDegrees * (M_PI/180);
 //        let offsetPositioning = CGPointMake(500, -20.0);
-        let offsetPositioning = CGPointMake(0, cell.contentView.frame.size.height*4);
-        var transform = CATransform3DIdentity;
-        transform = CATransform3DRotate(transform, CGFloat(rotationAngleRadians), -50.0, 0.0, 1.0);
-        transform = CATransform3DTranslate(transform, offsetPositioning.x, offsetPositioning.y, -50.0);
-        cellContentView.layer.transform = transform;
-        cellContentView.layer.opacity = 0.8;
-        
-        UIView.animateWithDuration(0.65, delay: 0.0, usingSpringWithDamping: 0.65, initialSpringVelocity: 0.8, options: .TransitionNone, animations: { () -> Void in
-            cellContentView.layer.transform = CATransform3DIdentity;
-            cellContentView.layer.opacity = 1;
-            }) { (success) -> Void in
-                
-        }
-    }
+//        let offsetPositioning = CGPointMake(0, cell.contentView.frame.size.height*4);
+//        var transform = CATransform3DIdentity;
+//        transform = CATransform3DRotate(transform, CGFloat(rotationAngleRadians), -50.0, 0.0, 1.0);
+//        transform = CATransform3DTranslate(transform, offsetPositioning.x, offsetPositioning.y, -50.0);
+//        cellContentView.layer.transform = transform;
+//        cellContentView.layer.opacity = 0.8;
+//        
+//        UIView.animateWithDuration(0.65, delay: 0.0, usingSpringWithDamping: 0.65, initialSpringVelocity: 0.8, options: .TransitionNone, animations: { () -> Void in
+//            cellContentView.layer.transform = CATransform3DIdentity;
+//            cellContentView.layer.opacity = 1;
+//            }) { (success) -> Void in
+//                
+//        }
+//    }
 }
 
 extension PNTAGameplayViewController: PNTAWordSelectorViewDelegate {
