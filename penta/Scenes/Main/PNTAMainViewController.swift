@@ -333,8 +333,7 @@ class PNTAMainViewController: UITableViewController {
         var match: PNTAMatch?
         
         if section == 0 { //quick match
-            let newMatch = PNTAMatch()
-            newMatch.isLocalMatch = true
+            let newMatch = LocalMatchHelper.newMatch()
             showWordSelectorForMatch(newMatch)
         } else if section == 1 { //active match (users turn)
             match = activeMatches[row]

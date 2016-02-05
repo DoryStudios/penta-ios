@@ -28,6 +28,13 @@ struct LocalMatchHelper {
         defaults.synchronize()
     }
     
+    static func newMatch() -> PNTAMatch {
+        let match = PNTAMatch()
+        match.isLocalMatch = true
+        match.isFinished = false
+        return match
+    }
+    
     static func getMatch() -> PNTAMatch {
         let match = PNTAMatch()
         let defaults = NSUserDefaults.standardUserDefaults()
