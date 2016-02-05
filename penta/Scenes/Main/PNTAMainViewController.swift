@@ -22,6 +22,7 @@ class PNTAMainViewController: UITableViewController {
     
     var pendingMatches: [PNTAMatch] = []
     var activeMatches: [PNTAMatch] = []
+    var completedMatches: [PNTAMatch] = []
     
     var potentialMatch: PNTAMatch?
     var wordSelector: PNTAWordSelectorView?
@@ -60,6 +61,8 @@ class PNTAMainViewController: UITableViewController {
                 } else { //no lastGuess, match waiting for user to acknowledge
                     
                 }
+            } else {
+                completedMatches.append(match)
             }
         }
         
