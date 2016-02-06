@@ -32,8 +32,10 @@ class PNTAWordSelectorView: UIView {
     var state: PNTAWordSelectorViewState = .Idle
     var delegate: PNTAWordSelectorViewDelegate?
 
+    @IBOutlet weak var containerTopLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var helpContainerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var blindField: UITextField!
+    @IBOutlet weak var selectorContainer: UIView!
     
     @IBAction func didPressFinish(sender: AnyObject) {
         let word = buildWord()
@@ -58,17 +60,21 @@ class PNTAWordSelectorView: UIView {
             label.text = "\(char)"
         }
         
-        helpContainerHeightConstraint.constant = 40
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.layoutIfNeeded()
-        }
+//        helpContainerHeightConstraint.constant = 40
+//        UIView.animateWithDuration(0.3) { () -> Void in
+//            self.layoutIfNeeded()
+//        }
     }
     
     func prepare() {
         blindField.delegate = self
         
         helpContainerHeightConstraint.constant = 0
+        containerTopLayoutConstraint.constant = selectorContainer.frame.size.height * -1.5
         layoutIfNeeded()
+        
+        let center = NSNotificationCenter.defaultCenter()
+        center.addObserver(self, selector: Selector("updateBlindField"), name: UITextFieldTextDidChangeNotification, object: nil)
         
         for var i = 0; i < 15; i++ {
             var tag = i + LABEL_TAG_OFFSET
@@ -84,11 +90,42 @@ class PNTAWordSelectorView: UIView {
             }
         }
         
+        
         containers[0].backgroundColor = UIColor.lightGrayColor()
         
-        layer.borderWidth = 1.0
-        layer.borderColor = UIColor.groupTableViewBackgroundColor().CGColor
-        layer.cornerRadius = 8.0
+        selectorContainer.layer.borderWidth = 1.0
+        selectorContainer.layer.borderColor = UIColor.groupTableViewBackgroundColor().CGColor
+        selectorContainer.layer.cornerRadius = 8.0
+    }
+    
+    func show() {
+        containerTopLayoutConstraint.constant = 50
+        hidden = false
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.layoutIfNeeded()
+            }) { (success) -> Void in
+            if success {
+                self.blindField.becomeFirstResponder()
+            }
+        }
+    }
+    
+    func hide() {
+        if blindField.isFirstResponder() {
+            blindField.resignFirstResponder()
+            NSNotificationCenter.defaultCenter().removeObserver(self)
+        }
+        
+        containerTopLayoutConstraint.constant = selectorContainer.frame.size.height * -1.5
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.layoutIfNeeded()
+            }) { (success) -> Void in
+            if success {
+                self.hidden = true
+            }
+        }
     }
     
     func buildWord() -> String {
