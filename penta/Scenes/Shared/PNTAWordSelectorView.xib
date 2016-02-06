@@ -254,6 +254,12 @@
                                                 <action selector="didPressFinish:" destination="iN0-l3-epB" eventType="touchUpInside" id="wCN-Yp-uPw"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thinking..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWK-56-at0">
+                                            <rect key="frame" x="110" y="8" width="80" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Thg-fL-Lss" firstAttribute="top" secondItem="KqH-2Y-Ohh" secondAttribute="top" id="GsC-x0-Qbn"/>
@@ -262,7 +268,9 @@
                                         <constraint firstItem="Thg-fL-Lss" firstAttribute="width" secondItem="KqH-2Y-Ohh" secondAttribute="width" id="Xfz-3F-J2X"/>
                                         <constraint firstAttribute="bottom" secondItem="shK-ZG-Je8" secondAttribute="bottom" constant="30" id="gMC-OK-dVv"/>
                                         <constraint firstItem="Thg-fL-Lss" firstAttribute="centerX" secondItem="KqH-2Y-Ohh" secondAttribute="centerX" id="hIB-Hp-rCt"/>
+                                        <constraint firstItem="dWK-56-at0" firstAttribute="centerX" secondItem="KqH-2Y-Ohh" secondAttribute="centerX" id="lqP-c5-wQa"/>
                                         <constraint firstItem="bsW-Zc-QCI" firstAttribute="centerY" secondItem="shK-ZG-Je8" secondAttribute="centerY" id="vII-Ty-9f5"/>
+                                        <constraint firstItem="dWK-56-at0" firstAttribute="top" secondItem="KqH-2Y-Ohh" secondAttribute="top" constant="8" id="w4v-2r-uf9"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -295,6 +303,7 @@
                 <outlet property="containerTopLayoutConstraint" destination="evL-yd-5fL" id="uvW-Xx-Dud"/>
                 <outlet property="helpContainerHeightConstraint" destination="cIr-uX-cVd" id="p8g-30-La4"/>
                 <outlet property="selectorContainer" destination="PC0-eC-Gx8" id="MZN-6G-kZh"/>
+                <outlet property="wordSuggestionLabel" destination="dWK-56-at0" id="i5x-8a-R5L"/>
             </connections>
             <point key="canvasLocation" x="139" y="300"/>
         </view>

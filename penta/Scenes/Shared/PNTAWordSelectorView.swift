@@ -29,11 +29,30 @@ class PNTAWordSelectorView: UIView {
     var word: String = ""
     var potentialMatch: PNTAMatch!
     
-    var index: Dictionary<Character,Int> = [:]
+    var index: Dictionary<Character,Int> = [:] {
+        didSet {
+//            unusedCharacters = WordHelper.unusedCharactersFromIndex(index)
+//            print("unused: \(unusedCharacters)")
+//            avoidCharacters = WordHelper.avoidCharactersFromIndex(index)
+//            print("avoid: \(avoidCharacters)")
+//            possibleCharacters = WordHelper.possibleCharactersFromIndex(index)
+//            print("possible: \(possibleCharacters)")
+        }
+    }
+    var wordStrategy: PNTAWordStrategy = .Random {
+        didSet {
+            updatePossibleWordsWithStrategy(wordStrategy)
+        }
+    }
+    var unusedCharacters: [Character] = []
+    var avoidCharacters: [Character] = []
+    var possibleCharacters: [Character] = []
+    var possibleWords: [String] = []
     
     var state: PNTAWordSelectorViewState = .Idle
     var delegate: PNTAWordSelectorViewDelegate?
 
+    @IBOutlet weak var wordSuggestionLabel: UILabel!
     @IBOutlet weak var containerTopLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var helpContainerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var blindField: UITextField!
@@ -75,9 +94,6 @@ class PNTAWordSelectorView: UIView {
         containerTopLayoutConstraint.constant = selectorContainer.frame.size.height * -1.5
         layoutIfNeeded()
         
-        let center = NSNotificationCenter.defaultCenter()
-        center.addObserver(self, selector: Selector("updateBlindField"), name: UITextFieldTextDidChangeNotification, object: nil)
-        
         for var i = 0; i < 15; i++ {
             var tag = i + LABEL_TAG_OFFSET
             if let label = viewWithTag(tag) as? UILabel {
@@ -92,7 +108,6 @@ class PNTAWordSelectorView: UIView {
             }
         }
         
-        
         containers[0].backgroundColor = UIColor.lightGrayColor()
         
         selectorContainer.layer.borderWidth = 1.0
@@ -101,10 +116,20 @@ class PNTAWordSelectorView: UIView {
     }
     
     func show() {
-        containerTopLayoutConstraint.constant = 50
+        containerTopLayoutConstraint.constant = 25
         hidden = false
         
-        print("\(index)")
+        let center = NSNotificationCenter.defaultCenter()
+        center.addObserver(self, selector: Selector("updateBlindField"), name: UITextFieldTextDidChangeNotification, object: nil)
+        
+//        if (possibleWords.count > 2) {
+//            wordSuggestionLabel.text = "\(possibleWords[0]) \(possibleWords[1]) \(possibleWords[2])"
+//            wordSuggestionLabel.hidden = false
+//        } else {
+//            wordSuggestionLabel.hidden = true
+//        }
+        
+//        print("\(index)")
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.layoutIfNeeded()
@@ -149,13 +174,25 @@ class PNTAWordSelectorView: UIView {
             blindField.text = "\(character)"
             updateActiveContainer(activeIndex, increment: true)
         } else {
-            print("probably backspace")
+//            print("probably backspace")
             var newIndex = activeIndex - 1
             if newIndex < 0 {
                 newIndex += 5
             }
             updateActiveContainer(newIndex, increment: false)
             blindField.text = " "
+        }
+    }
+    
+    func updatePossibleWordsWithStrategy(strategy: PNTAWordStrategy) {
+        self.wordSuggestionLabel.text = "Thinking..."
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { () -> Void in
+            let words = WordHelper.possibleWordsFromIndex(self.index, usingStrategy: strategy)
+            self.possibleWords = words
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                let string = words.joinWithSeparator(" ")
+                self.wordSuggestionLabel.text = string
+            })
         }
     }
     
