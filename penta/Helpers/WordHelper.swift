@@ -11,17 +11,17 @@ import Foundation
 struct WordHelper {
     
     static func isWordValid(word: String) -> Bool {
-        print("checking \(word)")
+//        print("checking \(word)")
         
         if word.characters.count != 5 {
-            print("invalid length")
+//            print("invalid length")
             return false
         }
         
         let letters = NSCharacterSet.letterCharacterSet()
         for char in word.unicodeScalars {
             if !letters.longCharacterIsMember(char.value) {
-                print("invalid character")
+//                print("invalid character")
                 return false
             }
         }
@@ -33,18 +33,18 @@ struct WordHelper {
         
         let dictionary = Lexicontext.sharedDictionary()
         if !dictionary.containsDefinitionFor(word.lowercaseString) {
-            print("no definition")
+//            print("no definition")
             return false
         }
         
         for char in word.characters {
             if word.componentsSeparatedByString(String(char)).joinWithSeparator("").characters.count < 4 {
-                print("duplicate letters")
+//                print("duplicate letters")
                 return false
             }
         }
         
-        print("\(word) acceptable")
+//        print("\(word) acceptable")
         return true
     }
     
