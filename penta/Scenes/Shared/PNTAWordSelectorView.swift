@@ -106,6 +106,7 @@ class PNTAWordSelectorView: UIView {
             self.layoutIfNeeded()
             }) { (success) -> Void in
             if success {
+                self.blindField.text = " "
                 self.blindField.becomeFirstResponder()
             }
         }
@@ -143,6 +144,14 @@ class PNTAWordSelectorView: UIView {
             label.text = "\(character)"
             blindField.text = "\(character)"
             updateActiveContainer(activeIndex, increment: true)
+        } else {
+            print("probably backspace")
+            var newIndex = activeIndex - 1
+            if newIndex < 0 {
+                newIndex += 5
+            }
+            updateActiveContainer(newIndex, increment: false)
+            blindField.text = " "
         }
     }
     
