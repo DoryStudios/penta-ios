@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum PNTAWordStrategy {
+    case Random, Unused, Calculated
+}
+
 struct WordHelper {
     
     static func isWordValid(word: String) -> Bool {
@@ -115,27 +119,86 @@ struct WordHelper {
     }
     
     static func possibleWordsFromIndex(index: Dictionary<Character, Int>) -> [String] {
-        var localMax = 0
+        return possibleWordsFromIndex(index, usingStrategy: .Calculated)
+//        var localMax = 0
+//        var words: [String] = []
+//        
+//        for var i = 0; i < 10; i++ {
+//            let word = randomWord()
+//            let strength = calculateWordStrength(word, fromIndex: index)
+//            if strength > localMax {
+//                localMax = strength
+//            }
+//        }
+//        
+//        var count = 0
+//        while words.count < 2 || count < 25 {
+//            let word = randomWord()
+//            let strength = calculateWordStrength(word, fromIndex: index)
+//            if strength > localMax {
+//                words.append(word)
+//            }
+//            count++
+//        }
+//        
+//        return words
+    }
+    
+    static func possibleWordsFromIndex(index: Dictionary<Character, Int>, usingStrategy strategy: PNTAWordStrategy) -> [String] {
         var words: [String] = []
-        
-        for var i = 0; i < 10; i++ {
-            let word = randomWord()
-            let strength = calculateWordStrength(word, fromIndex: index)
-            if strength > localMax {
-                localMax = strength
-            }
+        switch strategy {
+            case .Random:
+                print("random")
+                while words.count < 3 {
+                    let word = randomWord()
+                    if !words.contains(word) {
+                        words.append(word)
+                    }
+                }
+                break
+            case .Unused:
+                print("unused")
+                var count = 0
+                let unusedCharacters = unusedCharactersFromIndex(index)
+                while words.count < 2 {
+                    let word = randomWord()
+                    var unusedCount = 0
+                    for char in word.characters {
+                        if unusedCharacters.contains(char) {
+                            unusedCount++
+                        }
+                    }
+                    if unusedCount > 3 {
+                        words.append(word)
+                    } else {
+                        count++
+                    }
+                }
+                break
+            case .Calculated:
+                print("calculated")
+                var localMax = 0
+                
+                for var i = 0; i < 10; i++ { //generate local max word strength
+                    let word = randomWord()
+                    let strength = calculateWordStrength(word, fromIndex: index)
+                    if strength > localMax {
+                        localMax = strength
+                    }
+                }
+                
+                var count = 0
+                while words.count < 2 { //pick words that beat local max
+                    let word = randomWord()
+                    let strength = calculateWordStrength(word, fromIndex: index)
+                    if strength > localMax {
+                        words.append(word)
+                    }
+                    count++
+                }
+                break
         }
-        
-        var count = 0
-        while words.count < 2 || count < 25 {
-            let word = randomWord()
-            let strength = calculateWordStrength(word, fromIndex: index)
-            if strength > localMax {
-                words.append(word)
-            }
-            count++
-        }
-        
+        print("generated \(words.count) word")
         return words
     }
     
