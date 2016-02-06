@@ -56,7 +56,7 @@ class PNTAGameplayViewController: UIViewController {
     var isActiveGame: Bool = true {
         didSet {
             if !isActiveGame {
-            
+                playButton.enabled = false
             }
         }
     }
@@ -65,6 +65,9 @@ class PNTAGameplayViewController: UIViewController {
         match.appendGuess(guess)
         playerGuesses.append(guess)
         playerTable.reloadData()
+        
+        let indexPath = NSIndexPath(forRow: playerGuesses.count-1, inSection: 0)
+        playerTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
         
         if playerGuesses.count > 4 {
             let index = WordHelper.characterStrengthIndexFromGuesses(playerGuesses)
@@ -81,9 +84,6 @@ class PNTAGameplayViewController: UIViewController {
             }
         }
 
-        let indexPath = NSIndexPath(forRow: playerGuesses.count-1, inSection: 0)
-        playerTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
-        
         if isLocalMatch && isActiveGame {
             let opponentWord = WordHelper.randomWord()
             let opponentGuess = PNTAGuess()
@@ -138,8 +138,15 @@ class PNTAGameplayViewController: UIViewController {
             }
         }
         
+        
+        
         if let selector = wordSelector {
 //            view.addSubview(wordSelector!)
+            if playerGuesses.count > 4 {
+                let index = WordHelper.characterStrengthIndexFromGuesses(playerGuesses)
+                selector.index = index
+            }
+            
             selector.potentialMatch = match
             selector.show()
 //            let point = CGPointMake(view.center.x, view.center.y*0.5)

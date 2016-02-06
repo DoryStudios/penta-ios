@@ -29,6 +29,8 @@ class PNTAWordSelectorView: UIView {
     var word: String = ""
     var potentialMatch: PNTAMatch!
     
+    var index: Dictionary<Character,Int> = [:]
+    
     var state: PNTAWordSelectorViewState = .Idle
     var delegate: PNTAWordSelectorViewDelegate?
 
@@ -101,6 +103,8 @@ class PNTAWordSelectorView: UIView {
     func show() {
         containerTopLayoutConstraint.constant = 50
         hidden = false
+        
+        print("\(index)")
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.layoutIfNeeded()
