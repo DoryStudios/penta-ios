@@ -125,11 +125,12 @@ class PNTAGameplayViewController: UIViewController {
             let nibs = NSBundle.mainBundle().loadNibNamed("PNTAWordSelectorView", owner: self, options: nil)
             if nibs.count > 0 {
                 if let selector = nibs[0] as? PNTAWordSelectorView {
-                    let rect = CGRectMake(0, 0, view.frame.size.width*0.9, view.frame.size.height*0.4)
-                    let center = CGPointMake(view.center.x, view.frame.size.height*1.2)
-                    selector.bounds = rect
-                    selector.center = center
-//                    view.addSubview(selector)
+//                    let rect = CGRectMake(0, 0, view.frame.size.width*0.9, view.frame.size.height*0.4)
+//                    let center = CGPointMake(view.center.x, view.frame.size.height*1.2)
+//                    selector.bounds = rect
+//                    selector.center = center
+                    selector.frame = view.frame
+                    view.addSubview(selector)
                     selector.prepare()
                     selector.delegate = self
                     wordSelector = selector
@@ -138,18 +139,21 @@ class PNTAGameplayViewController: UIViewController {
         }
         
         if let selector = wordSelector {
-            view.addSubview(wordSelector!)
+//            view.addSubview(wordSelector!)
             selector.potentialMatch = match
-            let point = CGPointMake(view.center.x, view.center.y*0.5)
-            selector.animateCenterToPoint(point, enableEntry: true)
+            selector.show()
+//            let point = CGPointMake(view.center.x, view.center.y*0.5)
+//            selector.animateCenterToPoint(point, enableEntry: true)
         }
     }
     
     func hideWordSelector() {
-        let point = CGPointMake(view.center.x, view.frame.size.height*1.2)
-        if let selector = wordSelector {
-            selector.animateCenterToPoint(point, enableEntry: false)
-        }
+//        let point = CGPointMake(view.center.x, view.frame.size.height*1.2)
+//        if let selector = wordSelector {
+//            selector.animateCenterToPoint(point, enableEntry: false)
+//                selector.hide()
+//        }
+        wordSelector?.hide()
     }
     
     func showMatchEnd(didWin: Bool) {
