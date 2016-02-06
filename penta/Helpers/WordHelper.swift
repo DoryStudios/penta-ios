@@ -88,9 +88,35 @@ struct WordHelper {
     }
     
     static func possibleWordsFromGuesses(guesses: [PNTAGuess]) -> [String] {
-        var words: [String] = []
         let index = characterStrengthIndexFromGuesses(guesses)
+        return possibleWordsFromIndex(index)
+//        var words: [String] = []
+//        var localMax = 0
+//        
+//        for var i = 0; i < 10; i++ {
+//            let word = randomWord()
+//            let strength = calculateWordStrength(word, fromIndex: index)
+//            if strength > localMax {
+//                localMax = strength
+//            }
+//        }
+//        
+//        var count = 0
+//        while words.count < 2 || count < 25 {
+//            let word = randomWord()
+//            let strength = calculateWordStrength(word, fromIndex: index)
+//            if strength > localMax {
+//                words.append(word)
+//            }
+//            count++
+//        }
+//        
+//        return words
+    }
+    
+    static func possibleWordsFromIndex(index: Dictionary<Character, Int>) -> [String] {
         var localMax = 0
+        var words: [String] = []
         
         for var i = 0; i < 10; i++ {
             let word = randomWord()
@@ -114,8 +140,25 @@ struct WordHelper {
     }
     
     static func possibleCharactersFromGuesses(guesses: [PNTAGuess]) -> [Character] {
-        var characters: [Character] = []
         let index = characterStrengthIndexFromGuesses(guesses)
+        return possibleCharactersFromIndex(index)
+//        var characters: [Character] = []
+//        let average = averageStrengthOfIndex(index)
+//        
+//        for char in index.keys {
+//            if let value = index[char] {
+//                let factor = Float(value)/average
+//                if factor < 8 && factor > 0.2  {
+//                    characters.append(char)
+//                }
+//            }
+//        }
+//        
+//        return characters
+    }
+    
+    static func possibleCharactersFromIndex(index: Dictionary<Character, Int>) -> [Character] {
+        var characters: [Character] = []
         let average = averageStrengthOfIndex(index)
         
         for char in index.keys {
@@ -131,18 +174,50 @@ struct WordHelper {
     }
     
     static func unusedCharactersFromGuesses(guesses: [PNTAGuess]) -> [Character] {
-        var characters: [Character] = []
         let index = characterStrengthIndexFromGuesses(guesses)
-        let set = NSMutableCharacterSet.uppercaseLetterCharacterSet()
-        let usedSet = NSCharacterSet(charactersInString: String(index.keys))
-        set.formIntersectionWithCharacterSet(usedSet.invertedSet)
-//        characters = Array(set.)
+        return unusedCharactersFromIndex(index)
+//        var characters: [Character] = []
+//        let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+//        
+//        for char in letters.characters {
+//            if index.indexForKey(char) == nil {
+//                characters.append(char)
+//            }
+//        }
+//        
+//        return characters
+    }
+    
+    static func unusedCharactersFromIndex(index: Dictionary<Character, Int>) -> [Character] {
+        var characters: [Character] = []
+        let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        
+        for char in letters.characters {
+            if index.indexForKey(char) == nil {
+                characters.append(char)
+            }
+        }
+        
         return characters
     }
     
     static func avoidCharactersFromGuesses(guesses: [PNTAGuess]) -> [Character] {
-        var characters: [Character] = []
         let index = characterStrengthIndexFromGuesses(guesses)
+        return avoidCharactersFromIndex(index)
+//        var characters: [Character] = []
+//        
+//        for char in index.keys {
+//            if let value = index[char] {
+//                if value == 0 {
+//                    characters.append(char)
+//                }
+//            }
+//        }
+//        return characters
+    }
+    
+    static func avoidCharactersFromIndex(index: Dictionary<Character, Int>) -> [Character] {
+        var characters: [Character] = []
         
         for char in index.keys {
             if let value = index[char] {
@@ -162,11 +237,16 @@ struct WordHelper {
             if let word = guess.string {
                 for char in word.characters {
                     if let strength = characters[char] {
-                        let newStrength = strength+value*value
-                        characters.updateValue(newStrength, forKey: char)
+                        if strength > 0 && value > 0 {
+                            let newStrength = strength+(value*value)
+                            characters.updateValue(newStrength, forKey: char)
+                        } else if strength == 0 || value == 0 {
+                            characters.updateValue(0, forKey: char)
+                        }
                     } else {
-                        characters.updateValue(value, forKey: char)
+                        characters.updateValue(value*value, forKey: char)
                     }
+//                    print("processed \(char) at \(value): \(characters)")
                 }
             }
         }
