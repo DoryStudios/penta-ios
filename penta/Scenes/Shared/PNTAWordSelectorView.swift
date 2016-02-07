@@ -21,6 +21,7 @@ class PNTAWordSelectorView: UIView {
 
     let LABEL_TAG_OFFSET = 10
     let CONTAINER_TAG_OFFSET = 20
+    let letterSet = NSCharacterSet.uppercaseLetterCharacterSet()
     
     var labels: [UILabel] = []
     var containers: [UIView] = []
@@ -190,8 +191,10 @@ class PNTAWordSelectorView: UIView {
             let words = WordHelper.possibleWordsFromIndex(self.index, usingStrategy: strategy)
             self.possibleWords = words
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let string = words.joinWithSeparator(" ")
-                self.wordSuggestionLabel.text = string
+                if let label = self.wordSuggestionLabel {
+                    let string = words.joinWithSeparator(" ")
+                    label.text = string
+                }
             })
         }
     }
