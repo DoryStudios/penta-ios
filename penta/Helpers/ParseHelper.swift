@@ -81,5 +81,10 @@ class ParseHelper: NSObject {
         }
     }
     
+    static func tryLoginViaParse(completionBlock: PFUserResultBlock) {
+        let permissions = ["public_profile", "user_friends"]
+        
+        PFFacebookUtils.logInInBackgroundWithReadPermissions(permissions, block:completionBlock)
+    }
    
 }

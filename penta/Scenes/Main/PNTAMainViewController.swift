@@ -42,6 +42,32 @@ class PNTAMainViewController: UITableViewController {
         }
     }
     
+    func fetchUserDetails() {
+        FacebookHelper.fetchCurrentUserProfile {
+        (connection: FBSDKGraphRequestConnection?, result: AnyObject?, error: NSError?) -> Void in
+            if let error = error {
+                print("error fetching user details:\n\(error)")
+            }
+            
+            if let dict = result as? NSDictionary {
+                print("fetched user details:\n\(dict)")
+            }
+        }
+    }
+    
+    func fetchUserFriends() {
+        FacebookHelper.fetchCurrentUserFriends(false) {
+        (connection: FBSDKGraphRequestConnection?, result: AnyObject?, error: NSError?) -> Void in
+            if let error = error {
+                print("error fetching friends:\n\(error)")
+            }
+            
+            if let dict = result as? NSDictionary {
+                print("fetched user friends:\n\(dict)")
+            }
+        }
+    }
+    
     func filterMatches(matches: [PNTAMatch]) {
         
         for match in matches {
@@ -142,6 +168,21 @@ class PNTAMainViewController: UITableViewController {
         }
     }
     
+    func connectSocial() {
+        ParseHelper.tryLoginViaParse { (user: PFUser?, error: NSError?) -> Void in
+            print("returned from facebook connect")
+            if let error = error {
+                print("error occurred: \(error)")
+                self.isLinkedToFacebook = true
+                self.tableView.reloadData()
+            }
+            
+            if let user = user {
+                print("connected user: \(user)")
+            }
+        }
+    }
+    
     //MARK: - Lifecycle methods
     
     override func viewDidLoad() {
@@ -150,6 +191,8 @@ class PNTAMainViewController: UITableViewController {
         if let user = PFUser.currentUser() {
             if PFFacebookUtils.isLinkedWithUser(user) { //happy path
                 fetchMatches()
+                fetchUserDetails()
+                fetchUserFriends()
             } else { //likely user invalidated session in facebook
                 isLinkedToFacebook = false
             }
@@ -260,7 +303,7 @@ class PNTAMainViewController: UITableViewController {
         switch section {
             case 0:
                 //call to action button
-                let addSocialButton = isLinkedToFacebook ? 0 : 0
+                let addSocialButton = isLinkedToFacebook ? 0 : 1
                 return 1 + addSocialButton
             
             case 1:
@@ -353,8 +396,12 @@ class PNTAMainViewController: UITableViewController {
         var match: PNTAMatch?
         
         if section == 0 { //quick match
-            let newMatch = LocalMatchHelper.newMatch()
-            showWordSelectorForMatch(newMatch)
+            if row == 0 {
+                let newMatch = LocalMatchHelper.newMatch()
+                showWordSelectorForMatch(newMatch)
+            } else {
+                connectSocial()
+            }
         } else if section == 1 { //active match (users turn)
             match = activeMatches[row]
         } else if section == 2 { //pending match (opponents turn)
