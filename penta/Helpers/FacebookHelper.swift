@@ -22,7 +22,7 @@ struct FacebookHelper {
     static func fetchCurrentUserFriends(hasInstalled: Bool, completionBlock: FBSDKGraphRequestHandler) {
         var parameters = [:] as [NSObject: AnyObject]
         if hasInstalled {
-            parameters = ["fields":"name, installed"]
+            parameters = ["fields":"name, installed, picture"]
         } else {
             parameters = ["fields":"name"]
         }
