@@ -28,9 +28,11 @@ class PNTAMainViewController: UITableViewController {
     var wordSelector: PNTAWordSelectorView?
     var isLinkedToFacebook: Bool = true
     
+    lazy var currentUser = PNTAUser.sharedUser
+    
     func fetchMatches() {
         if let user = PFUser.currentUser() {
-        ParseHelper.fetchMatchesForUser(user, includeFinished: false, completionBlock: {
+            ParseHelper.fetchMatchesForUser(user, includeFinished: false, completionBlock: {
             (result: [AnyObject]?, error: NSError?) -> Void in
                 if let matches = result as? [PNTAMatch] {
                     print("fetched \(matches.count) matches")
@@ -39,32 +41,8 @@ class PNTAMainViewController: UITableViewController {
                     print("encountered error fetching matches:\n\(error)")
                 }
             })
-        }
-    }
-    
-    func fetchUserDetails() {
-        FacebookHelper.fetchCurrentUserProfile {
-        (connection: FBSDKGraphRequestConnection?, result: AnyObject?, error: NSError?) -> Void in
-            if let error = error {
-                print("error fetching user details:\n\(error)")
-            }
+        } else {
             
-            if let dict = result as? NSDictionary {
-                print("fetched user details:\n\(dict)")
-            }
-        }
-    }
-    
-    func fetchUserFriends() {
-        FacebookHelper.fetchCurrentUserFriends(false) {
-        (connection: FBSDKGraphRequestConnection?, result: AnyObject?, error: NSError?) -> Void in
-            if let error = error {
-                print("error fetching friends:\n\(error)")
-            }
-            
-            if let dict = result as? NSDictionary {
-                print("fetched user friends:\n\(dict)")
-            }
         }
     }
     
@@ -188,33 +166,31 @@ class PNTAMainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let user = PFUser.currentUser() {
-            if PFFacebookUtils.isLinkedWithUser(user) { //happy path
-                fetchMatches()
-                fetchUserDetails()
-                fetchUserFriends()
-            } else { //likely user invalidated session in facebook
-                isLinkedToFacebook = false
-            }
-        } else { //new user, offer link to facebook, don't bother fetch remote matches
-            isLinkedToFacebook = false
-        }
-        
+//        if let user = PFUser.currentUser() {
+//            if PFFacebookUtils.isLinkedWithUser(user) { //happy path
+//                fetchMatches()
+//            } else { //likely user invalidated session in facebook
+//                isLinkedToFacebook = false
+//            }
+//        } else { //new user, offer link to facebook, don't bother fetch remote matches
+//            isLinkedToFacebook = false
+//        }
+
+//        if let nc = self.navigationController {
+//            nc.setNavigationBarHidden(true, animated: false)
+//        }
+
         let imageView = UIImageView(image: UIImage(named: "penta-bg"))
         imageView.contentMode = .ScaleAspectFill
         tableView.backgroundView = imageView
+        
+        let matches = LocalMatchHelper.fetchMatches()
+        filterMatches(matches)
         
         if !isLinkedToFacebook {
             updateTable()
         }
         
-        if LocalMatchHelper.hasSoloMatch() {
-            let matches = LocalMatchHelper.fetchMatches()
-            filterMatches(matches)
-        }
-//        if let nc = self.navigationController {
-//            nc.setNavigationBarHidden(true, animated: false)
-//        }
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -223,6 +199,9 @@ class PNTAMainViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        isLinkedToFacebook = currentUser.isLinkedToFacebook
+        
         tableView.reloadData()
     }
     
@@ -316,7 +295,7 @@ class PNTAMainViewController: UITableViewController {
     }
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
