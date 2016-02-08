@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PNTAChallengeTableViewCell" rowHeight="75" id="KGk-i7-Jjw" customClass="PNTAChallengeTableViewCell" customModule="penta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KZ3-7W-h8J">
+                        <rect key="frame" x="12" y="10" width="296" height="57"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zQz-ou-FDa">
+                                <rect key="frame" x="8" y="4" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Gsh-qz-QeC"/>
+                                    <constraint firstAttribute="width" constant="50" id="mGm-N5-aMj"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6XQ-eX-cko">
+                                <rect key="frame" x="72" y="18" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Gf-pl-oWw">
+                                <rect key="frame" x="244" y="14" width="36" height="30"/>
+                                <state key="normal" title="PLAY"/>
+                                <connections>
+                                    <action selector="didPressChallenge:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5qq-jm-XiQ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1Gf-pl-oWw" firstAttribute="centerY" secondItem="zQz-ou-FDa" secondAttribute="centerY" id="HOR-d3-NyH"/>
+                            <constraint firstAttribute="trailing" secondItem="1Gf-pl-oWw" secondAttribute="trailing" constant="16" id="OVp-rH-PgW"/>
+                            <constraint firstItem="6XQ-eX-cko" firstAttribute="centerY" secondItem="zQz-ou-FDa" secondAttribute="centerY" id="U1d-j7-hJ3"/>
+                            <constraint firstItem="zQz-ou-FDa" firstAttribute="centerY" secondItem="KZ3-7W-h8J" secondAttribute="centerY" id="Xqw-wN-dfj"/>
+                            <constraint firstItem="6XQ-eX-cko" firstAttribute="leading" secondItem="zQz-ou-FDa" secondAttribute="trailing" constant="14" id="hUM-Ui-bnb"/>
+                            <constraint firstItem="zQz-ou-FDa" firstAttribute="leading" secondItem="KZ3-7W-h8J" secondAttribute="leading" constant="8" id="mrQ-Ns-Z36"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="6"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="KZ3-7W-h8J" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="4" id="8ON-QN-Xkh"/>
+                    <constraint firstItem="KZ3-7W-h8J" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="9Zk-qY-Ulj"/>
+                    <constraint firstItem="KZ3-7W-h8J" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" constant="1" id="VRS-CB-L8V"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="KZ3-7W-h8J" secondAttribute="trailing" constant="4" id="rF8-xl-Elq"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="challengerImage" destination="zQz-ou-FDa" id="BpQ-ZK-Rmj"/>
+                <outlet property="challengerName" destination="6XQ-eX-cko" id="NIt-Am-JMu"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

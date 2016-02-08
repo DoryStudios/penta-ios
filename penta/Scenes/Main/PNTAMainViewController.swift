@@ -29,6 +29,7 @@ class PNTAMainViewController: UITableViewController {
     var isLinkedToFacebook: Bool = true
     
     lazy var currentUser = PNTAUser.sharedUser
+    var availableFriends: NSArray = []
     
     func fetchMatches() {
         if let user = PFUser.currentUser() {
@@ -146,21 +147,6 @@ class PNTAMainViewController: UITableViewController {
         }
     }
     
-    func connectSocial() {
-        ParseHelper.tryLoginViaParse { (user: PFUser?, error: NSError?) -> Void in
-            print("returned from facebook connect")
-            if let error = error {
-                print("error occurred: \(error)")
-                self.isLinkedToFacebook = true
-                self.tableView.reloadData()
-            }
-            
-            if let user = user {
-                print("connected user: \(user)")
-            }
-        }
-    }
-    
     //MARK: - Lifecycle methods
     
     override func viewDidLoad() {
@@ -201,6 +187,12 @@ class PNTAMainViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         isLinkedToFacebook = currentUser.isLinkedToFacebook
+        currentUser.addObserver(self, forKeyPath: "isLinkedToFacebook", options: .New, context: nil)
+        currentUser.addObserver(self, forKeyPath: "availableFriends", options: .New, context: nil)
+        
+        if currentUser.availableFriends.count > 0 {
+            
+        }
         
         tableView.reloadData()
     }
@@ -212,6 +204,27 @@ class PNTAMainViewController: UITableViewController {
             if let vc = segue.destinationViewController as? PNTAGameplayViewController, let match = sender as? PNTAMatch {
                 vc.match = match
             }
+        }
+    }
+    
+    //MARK: - KVO callback method
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        guard let dict = change else {
+            return
+        }
+        
+        if keyPath == "isLinkedToFacebook" {
+            print("observed change to social link:\n\(dict)")
+            var linkedStatus: Bool = false
+            if let isLinked = dict["new"]?.boolValue {
+                print("linked social value now \(isLinked)")
+                linkedStatus = isLinked
+            }
+            self.isLinkedToFacebook = linkedStatus
+            self.updateTable()
+        } else if keyPath == "availableFriends" {
+            updateTable()
         }
     }
     
@@ -267,6 +280,20 @@ class PNTAMainViewController: UITableViewController {
                 }
                 
                 break
+            case 3:
+                let reusedCell = tableView.dequeueReusableCellWithIdentifier("PNTAChallengeTableViewCell")
+                let challenger = currentUser.availableFriends.first
+                if let reusedCell = reusedCell as? PNTAChallengeTableViewCell {
+                    reusedCell.challengerName.text = "Gello"
+                    cell = reusedCell
+                } else {
+                    let arr = NSBundle.mainBundle().loadNibNamed("PNTAChallengeTableViewCell", owner: self, options: nil)
+                    if let newCell = arr[0] as? PNTAChallengeTableViewCell {
+                        newCell.challengerName.text = "Gello"
+                        cell = newCell
+                    }
+                }
+                break
             default: break
         }
         
@@ -289,6 +316,8 @@ class PNTAMainViewController: UITableViewController {
                 return activeMatches.count
             case 2:
                 return pendingMatches.count
+            case 3:
+                return currentUser.availableFriends.count
             default:
                 return 0
         }
@@ -301,9 +330,10 @@ class PNTAMainViewController: UITableViewController {
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let hasPendingMatches = !self.pendingMatches.isEmpty
         let hasActiveMatches = !self.activeMatches.isEmpty
+        let hasFriends = currentUser.availableFriends.count > 0
 
         var titleView: UIView? = nil
-        let rect = CGRectMake(0, 0, self.view.frame.size.width, 30)
+        let rect = CGRectMake(0, 0, self.view.frame.size.width, 40)
         
         if section == 0 {
             let arr = NSBundle.mainBundle().loadNibNamed("PNTAMenuHeaderView", owner: self, options: nil)
@@ -319,7 +349,7 @@ class PNTAMainViewController: UITableViewController {
                     vw.frame = rect
                     titleView = vw
                 }
-            } else if !hasPendingMatches && !hasActiveMatches {
+            } else if !hasPendingMatches && !hasActiveMatches && !hasFriends {
                 let arr = NSBundle.mainBundle().loadNibNamed("PNTAMatchHeaderView", owner: self, options: nil)
                 if let vw = arr[0] as? UIView, let label = vw.viewWithTag(42) as? UILabel {
                     vw.frame = rect
@@ -335,6 +365,17 @@ class PNTAMainViewController: UITableViewController {
                 if let vw = arr[0] as? UIView, let label = vw.viewWithTag(42) as? UILabel {
                     vw.frame = rect
                     label.text = "Opponent's Turn"
+                    titleView = vw
+                }
+            } else {
+                titleView = UIView(frame: CGRectZero)
+            }
+        } else if section == 3 {
+            if currentUser.availableFriends.count > 0 {
+                let arr = NSBundle.mainBundle().loadNibNamed("PNTAMatchHeaderView", owner: self, options: nil)
+                if let vw = arr[0] as? UIView, let label = vw.viewWithTag(42) as? UILabel {
+                    vw.frame = rect
+                    label.text = "Challenge Friends"
                     titleView = vw
                 }
             } else {
@@ -357,11 +398,12 @@ class PNTAMainViewController: UITableViewController {
         let hasPendingMatches = !self.pendingMatches.isEmpty
         let hasActiveMatches = !self.activeMatches.isEmpty
         let hasNoMatches = !hasActiveMatches && !hasPendingMatches
+        let hasFriends = currentUser.availableFriends.count > 0
         
         if section == 0 {
             return 100.0
-        } else if (section == 1 && (hasActiveMatches || hasNoMatches)) || (section == 2 && hasPendingMatches) {
-            return 30.0
+        } else if (section == 1 && (hasActiveMatches || hasNoMatches) && (hasFriends && hasActiveMatches)) || (section == 2 && hasPendingMatches) || section == 3 {
+            return 40.0
         } else {
             return CGFloat.min
         }
@@ -379,7 +421,7 @@ class PNTAMainViewController: UITableViewController {
                 let newMatch = LocalMatchHelper.newMatch()
                 showWordSelectorForMatch(newMatch)
             } else {
-                connectSocial()
+                currentUser.connectSocial()
             }
         } else if section == 1 { //active match (users turn)
             match = activeMatches[row]

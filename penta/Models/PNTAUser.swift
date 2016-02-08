@@ -8,17 +8,19 @@
 
 import Foundation
 
-class PNTAUser {
+class PNTAUser: NSObject {
     
     var imageURL: String?
     var userName: String?
     var parseUser: PFUser?
     
-    var isLinkedToFacebook: Bool = false
+    dynamic var isLinkedToFacebook: Bool = false
+    dynamic var availableFriends: Dictionary<String, String> = [:]
     
     static let sharedUser = PNTAUser()
     
-    init() {
+    override init() {
+        super.init()
         if let user = PFUser.currentUser() {
             parseUser = user
             if PFFacebookUtils.isLinkedWithUser(user) { //happy path
@@ -27,6 +29,20 @@ class PNTAUser {
                 fetchUserFriends()
             } else { //likely user invalidated session in facebook
 //                isLinkedToFacebook = false
+            }
+        }
+    }
+    
+    func connectSocial() {
+        ParseHelper.tryLoginViaParse { (user: PFUser?, error: NSError?) -> Void in
+            print("returned from facebook connect")
+            if let error = error {
+                print("error occurred: \(error)")
+            }
+            
+            if let user = user {
+                print("connected user: \(user)")
+                self.isLinkedToFacebook = true
             }
         }
     }
@@ -40,7 +56,14 @@ class PNTAUser {
             }
             
             if let dict = result as? NSDictionary {
-                print("fetched user details:\n\(dict)")
+                if let name = dict["name"] as? String {
+                    self.userName = name
+                }
+                
+                if let subdict = dict["picture"] as? NSDictionary, let data = subdict["data"] as? NSDictionary, let url = data["url"] as? String {
+                    self.imageURL = url
+                }
+//                print("fetched user details:\n\(dict)")
             }
         }
     }
@@ -53,7 +76,15 @@ class PNTAUser {
             }
             
             if let dict = result as? NSDictionary {
-                print("fetched user friends:\n\(dict)")
+                if let data = dict["data"] as? NSArray {
+                    for friend in data {
+                        if let id = friend["id"] as? String, let name = friend["name"] as? String {
+                            self.availableFriends.updateValue(name, forKey: id)
+                            print("added friend \(name)")
+                        }
+                    }
+                }
+//                print("fetched user friends:\n\(dict)")
             }
         }
     }
