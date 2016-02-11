@@ -78,6 +78,24 @@ class PNTAMainViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    func didChallenge(message: NSNotification) {
+        guard let friend = message.object as? PNTAFriend else {
+            print("notification sent without friend")
+            return
+        }
+        
+        ParseHelper.fetchUserByFacebookID(friend.socialID) {
+        (result: [AnyObject]?, error: NSError?) -> Void in
+            if let error = error {
+                print("error looking up user:\n\(error)")
+            }
+            
+            if let result = result as? [PFUser] {
+                
+            }
+        }
+    }
+    
     func pushMatch(match: PNTAMatch) {
         if match.isLocalMatch {
 //            let word = WordHelper.randomWord()
@@ -194,6 +212,8 @@ class PNTAMainViewController: UITableViewController {
             
         }
         
+        let center = NSNotificationCenter.defaultCenter()
+        center.addObserver(self, selector: Selector("didChallenge:"), name: ISSUE_CHALLENGE, object: nil)
         tableView.reloadData()
     }
     
@@ -224,6 +244,7 @@ class PNTAMainViewController: UITableViewController {
             self.isLinkedToFacebook = linkedStatus
             self.updateTable()
         } else if keyPath == "availableFriends" {
+            //TODO: should sort friends first
             updateTable()
         }
     }
@@ -282,14 +303,15 @@ class PNTAMainViewController: UITableViewController {
                 break
             case 3:
                 let reusedCell = tableView.dequeueReusableCellWithIdentifier("PNTAChallengeTableViewCell")
-                let challenger = currentUser.availableFriends.first
+                let row = indexPath.row
+                let challenger = currentUser.availableFriends[row]
                 if let reusedCell = reusedCell as? PNTAChallengeTableViewCell {
-                    reusedCell.challengerName.text = "Gello"
+                    reusedCell.challengerName.text = challenger.name
                     cell = reusedCell
                 } else {
                     let arr = NSBundle.mainBundle().loadNibNamed("PNTAChallengeTableViewCell", owner: self, options: nil)
                     if let newCell = arr[0] as? PNTAChallengeTableViewCell {
-                        newCell.challengerName.text = "Gello"
+                        newCell.friend = challenger
                         cell = newCell
                     }
                 }
