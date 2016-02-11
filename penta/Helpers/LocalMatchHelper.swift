@@ -50,6 +50,7 @@ struct LocalMatchHelper {
             match.isLocalMatch = true
             match.isFinished = dict[PARSE_MATCH_ISFINISHED_KEY] as? Bool ?? false
             match.objectId = uuid
+            match.isReady = true
             match.guesses = []
             
             if let arr = dict["Guesses"] as? [String] {

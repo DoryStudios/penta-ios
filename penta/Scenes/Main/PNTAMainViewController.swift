@@ -64,7 +64,7 @@ class PNTAMainViewController: UITableViewController {
                         pendingMatches.append(match)
                     }
                 } else { //no lastGuess, match waiting for user to acknowledge
-                    
+                    pendingMatches.append(match)
                 }
             } else {
                 completedMatches.append(match)
@@ -88,10 +88,15 @@ class PNTAMainViewController: UITableViewController {
         (result: [AnyObject]?, error: NSError?) -> Void in
             if let error = error {
                 print("error looking up user:\n\(error)")
-            }
-            
-            if let result = result as? [PFUser] {
-                
+            } else if let result = result as? [PFUser] {
+                print("found \(result.count)")
+                if result.count > 0 {
+                    let user = result[0]
+                    let match = PNTAMatch()
+                    match.fromUser = self.currentUser.parseUser
+                    match.toUser = user
+                    self.showWordSelectorForMatch(match)
+                }
             }
         }
     }
@@ -101,9 +106,12 @@ class PNTAMainViewController: UITableViewController {
 //            let word = WordHelper.randomWord()
 //            match.toUserWord = word
             LocalMatchHelper.setMatch(match)
+            performSegueWithIdentifier(GAMEPLAY_SEGUE, sender: match)
+        } else {
+            match.uploadMatch()
+            pendingMatches.append(match)
+            updateTable()
         }
-        potentialMatch = match
-        performSegueWithIdentifier(GAMEPLAY_SEGUE, sender: match)
     }
     
     func updateMatch(match: PNTAMatch) {
@@ -170,16 +178,6 @@ class PNTAMainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        if let user = PFUser.currentUser() {
-//            if PFFacebookUtils.isLinkedWithUser(user) { //happy path
-//                fetchMatches()
-//            } else { //likely user invalidated session in facebook
-//                isLinkedToFacebook = false
-//            }
-//        } else { //new user, offer link to facebook, don't bother fetch remote matches
-//            isLinkedToFacebook = false
-//        }
-
 //        if let nc = self.navigationController {
 //            nc.setNavigationBarHidden(true, animated: false)
 //        }
@@ -204,6 +202,16 @@ class PNTAMainViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        if let user = PFUser.currentUser() {
+            if PFFacebookUtils.isLinkedWithUser(user) { //happy path
+                fetchMatches()
+            } else { //likely user invalidated session in facebook
+                isLinkedToFacebook = false
+                }
+            } else { //new user, offer link to facebook, don't bother fetch remote matches
+                isLinkedToFacebook = false
+        }
+
         isLinkedToFacebook = currentUser.isLinkedToFacebook
         currentUser.addObserver(self, forKeyPath: "isLinkedToFacebook", options: .New, context: nil)
         currentUser.addObserver(self, forKeyPath: "availableFriends", options: .New, context: nil)
@@ -240,6 +248,9 @@ class PNTAMainViewController: UITableViewController {
             if let isLinked = dict["new"]?.boolValue {
                 print("linked social value now \(isLinked)")
                 linkedStatus = isLinked
+                if isLinked {
+                    fetchMatches()
+                }
             }
             self.isLinkedToFacebook = linkedStatus
             self.updateTable()

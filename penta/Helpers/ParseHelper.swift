@@ -70,10 +70,16 @@ class ParseHelper: NSObject {
         query.findObjectsInBackgroundWithBlock(completionBlock)
     }
     
+    static func fetchUserByFacebookID(id: String, completionBlock: PFArrayResultBlock) {
+        if let query = PFUser.query() {
+            query.whereKey("facebookToken", equalTo: id)
+            query.findObjectsInBackgroundWithBlock(completionBlock)
+        }
+    }
+    
     static func fetchRandomUsers(completionBlock: PFArrayResultBlock) {
         
         if let query = PFUser.query() {
-            
             query.orderByAscending(PARSE_USER_UPDATED_KEY)
         
             query.findObjectsInBackgroundWithBlock(completionBlock)

@@ -23,7 +23,9 @@ class PNTAMatchTableViewCell: UITableViewCell {
                     //determine correct user, grab name
                 }
                 
-                if let lastGuess = match.lastGuess {
+                if !match.isReady {
+                    lastGuessLabel.text = "Waiting for response..."
+                } else if let lastGuess = match.lastGuess {
                     lastGuessLabel.text = "last guess \(lastGuess.string!)"
                 }
                 
