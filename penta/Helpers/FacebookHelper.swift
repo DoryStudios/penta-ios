@@ -10,6 +10,8 @@ import Foundation
 import FBSDKCoreKit
 import FBSDKLoginKit
 
+typealias PentaFacebookImageRequestHandler = (image: UIImage?, error: NSError?) -> (Void)
+
 struct FacebookHelper {
     
     static func fetchCurrentUserProfile(completionBlock: FBSDKGraphRequestHandler) {
@@ -28,7 +30,66 @@ struct FacebookHelper {
         }
 
         let request = FBSDKGraphRequest(graphPath: "/me/friends", parameters: parameters)
-        
         request.startWithCompletionHandler(completionBlock)
+    }
+    
+    static func fetchUserProfileWithId(id: String, completionBlock: PentaFacebookImageRequestHandler) {
+//        fetchCurrentUserProfile { (connnection, result, error) -> Void in
+//            if let error = error {
+//                print("error:\n\(error)")
+//            }
+//            
+//            if let token = result.valueForKey("id") as? String {
+//                let url = NSURL(string: "https://graph.facebook.com/\(id)/picture")
+//                let request = NSURLRequest(URL: url!)
+//                let session = NSURLSession.sharedSession()
+//                let task = session.dataTaskWithRequest(request, completionHandler: {
+//                    (data, response, error) -> Void in
+//                    
+//                    if let response = response as? NSHTTPURLResponse {
+//                        print("http response code: \(response.statusCode)")
+//                        print("http response url: \(response.URL)")
+//                    }
+//                    
+////                    if let data = data {
+////                        print("\(data)")
+////                        let image = UIImage(data: data)
+////                        completionBlock(image: image, error: nil)
+////                    }
+//                    
+//                    if let error = error {
+//                        print("error:\n\(error)")
+//                        completionBlock(image: nil, error: error)
+//                    }
+//                })
+//                task.resume()
+//            }
+//        }
+        let url = NSURL(string: "https://graph.facebook.com/\(id)/picture")
+        let request = NSURLRequest(URL: url!)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request, completionHandler: {
+            (data, response, error) -> Void in
+            
+            if let error = error {
+                print("error:\n\(error)")
+                completionBlock(image: nil, error: error)
+            } else if let response = response as? NSHTTPURLResponse, let url = response.URL {
+                print("http response code: \(response.statusCode)")
+                print("http response url: \(url)")
+                let imageRequest = NSURLRequest(URL: url)
+                let newTask = session.dataTaskWithRequest(imageRequest, completionHandler: {
+                    (data, response, error) -> Void in
+                    if let error = error {
+                        completionBlock(image: nil, error: error)
+                    } else if let data = data, let image = UIImage(data: data) {
+                        completionBlock(image: image, error: nil)
+                    }
+                })
+                newTask.resume()
+            }
+            
+        })
+        task.resume()
     }
 }
