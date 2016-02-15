@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import Parse
+import ParseFacebookUtilsV4
 
 let FACEBOOK_TOKEN = "Penta Facebook Token"
 
@@ -18,6 +20,7 @@ class PNTAUser: NSObject {
     
     dynamic var isLinkedToFacebook: Bool = false
     dynamic var availableFriends: [PNTAFriend] = []
+    dynamic var availableMatches: [PNTAMatch] = []
     
     static let sharedUser = PNTAUser()
     
@@ -29,6 +32,7 @@ class PNTAUser: NSObject {
                 isLinkedToFacebook = true
                 fetchUserDetails()
                 fetchUserFriends()
+                fetchMatches(user)
             } else { //likely user invalidated session in facebook
 //                isLinkedToFacebook = false
             }
@@ -45,7 +49,7 @@ class PNTAUser: NSObject {
             if let user = user {
                 print("connected user: \(user)")
                 self.isLinkedToFacebook = true
-                let defaults = NSUserDefaults.standardUserDefaults()
+//                let defaults = NSUserDefaults.standardUserDefaults()
 //                defaults.setObject(, forKey: <#T##String#>)
             }
         }
@@ -94,6 +98,19 @@ class PNTAUser: NSObject {
             }
         }
     }
+    
+    func fetchMatches(user: PFUser) {
+        
+        ParseHelper.fetchMatchesForUser(user, includeFinished: false, completionBlock: {
+        (result: [PFObject]?, error: NSError?) -> Void in
+            if let matches = result as? [PNTAMatch] {
+                print("fetched \(matches.count) matches")
+                self.availableMatches = matches
+            } else if let error = error {
+                print("encountered error fetching matches:\n\(error)")
+            }
+        })
+    }
 }
 
 class PNTAFriend: NSObject {
@@ -104,4 +121,16 @@ class PNTAFriend: NSObject {
         self.name = name
         self.socialID = socialID
     }
+}
+
+
+extension PFUser {
+
+    func madeGuess(guess: PNTAGuess) -> Bool {
+        if objectId == guess.owner?.objectId {
+            return true
+        }
+        return false
+    }
+
 }

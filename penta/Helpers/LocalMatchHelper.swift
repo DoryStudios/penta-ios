@@ -54,11 +54,13 @@ struct LocalMatchHelper {
             match.guesses = []
             
             if let arr = dict["Guesses"] as? [String] {
+                var guesses: [PNTAGuess] = []
                 for word in arr {
                     let guess = PNTAGuess()
                     guess.string = word
-                    match.guesses.append(guess)
+                    guesses.append(guess)
                 }
+                match.guesses = guesses
             }
 //            let guesses = getGuesses()
 //            match.guesses = guesses

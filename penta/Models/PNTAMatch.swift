@@ -8,6 +8,8 @@
 
 import Parse
 
+typealias PentaGuessCompletionBlock = (success: Bool, error: NSError?) -> (Void)
+
 class PNTAMatch: PFObject {
 
     var fromUser: PFUser? {
@@ -45,8 +47,24 @@ class PNTAMatch: PFObject {
         get { return self[PARSE_MATCH_LASTGUESS_KEY] as! PNTAGuess? }
     }
     
-    var isLocalMatch: Bool = false
-    var guesses: [PNTAGuess] = []
+    var isLocalMatch: Bool = false {
+        didSet {
+            if isLocalMatch {
+                let behavior = LocalMatchBehavior(newMatch: self)
+                localMatchBehavior = behavior
+            }
+        }
+    }
+    var localMatchBehavior: LocalMatchBehavior?
+    
+    var guesses: [PNTAGuess] = [] {
+        didSet {
+            filterGuesses(guesses)
+        }
+    }
+    
+    dynamic var ownGuesses: [PNTAGuess] = []
+    dynamic var opponentGuesses: [PNTAGuess] = []
     
     var matchUploadTask: UIBackgroundTaskIdentifier?
     
@@ -81,7 +99,7 @@ class PNTAMatch: PFObject {
     
     func fetchGuesses() {
         ParseHelper.fetchGuessesForMatch(self)  //trailing closure
-        { (result: [AnyObject]?, error: NSError?) -> Void in
+        { (result: [PFObject]?, error: NSError?) -> Void in
             if let guesses = result as? [PNTAGuess] {
                 self.guesses = guesses
                 print("retrieved guesses")
@@ -89,11 +107,50 @@ class PNTAMatch: PFObject {
         }
     }
     
-    func appendGuess(guess: PNTAGuess) {
-        guesses.append(guess)
+    func filterGuesses(guesses: [PNTAGuess]) {
+        var own: [PNTAGuess] = []
+        var opponent: [PNTAGuess] = []
+        if isLocalMatch {
+            for var i = 0; i < guesses.count; i++ {
+                let guess = guesses[i]
+                if i % 2 == 0 {
+                    own.append(guess)
+                } else {
+                    opponent.append(guess)
+                }
+            }
+        } else {
+            for guess in guesses {
+                if guess.ownerIsCurrentUser() {
+                    own.append(guess)
+                } else {
+                    opponent.append(guess)
+                }
+            }
+        }
+        ownGuesses = own
+        opponentGuesses = opponent
+        print("filtered guesses")
+    }
+    
+    func appendGuess(guess: PNTAGuess, completionBlock: PentaGuessCompletionBlock) {
         lastGuess = guess
         if isLocalMatch {
-            LocalMatchHelper.setGuesses(guesses)
+            guesses.append(guess)
+            LocalMatchHelper.setMatch(self)
+            completionBlock(success: true, error: nil)
+        } else {
+            let relationship = relationforKey("guesses")
+            relationship.addObject(guess)
+            saveInBackgroundWithBlock({
+                (success, error) -> Void in
+                if let error = error {
+                    completionBlock(success: false, error: error)
+                } else {
+                    self.ownGuesses.append(guess)
+                    completionBlock(success: true, error: nil)
+                }
+            })
         }
     }
 }

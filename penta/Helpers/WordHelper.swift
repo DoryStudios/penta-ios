@@ -36,8 +36,14 @@ struct WordHelper {
         }
         
         let dictionary = Lexicontext.sharedDictionary()
-        if !dictionary.containsDefinitionFor(word.lowercaseString) {
-//            print("no definition")
+        do {
+            let hasDefinition = try dictionary.containsDefinitionFor(word.lowercaseString)
+            if !hasDefinition {
+    //            print("no definition")
+                return false
+            }
+        } catch {
+            print("caught an exception for \(word)")
             return false
         }
         

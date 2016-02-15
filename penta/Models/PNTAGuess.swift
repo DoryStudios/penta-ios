@@ -15,11 +15,6 @@ class PNTAGuess: PFObject {
         get { return self[PARSE_OWNER_GUESS_KEY] as! PFUser? }
     }
     
-    var match: PNTAMatch? {
-        set { self[PARSE_GUESS_MATCH_KEY] = newValue }
-        get { return self[PARSE_GUESS_MATCH_KEY] as! PNTAMatch? }
-    }
-    
     var string: String? {
         set { self[PARSE_STRING_GUESS_KEY] = newValue }
         get { return self[PARSE_STRING_GUESS_KEY] as! String? }
@@ -28,56 +23,56 @@ class PNTAGuess: PFObject {
     var guessUploadTask: UIBackgroundTaskIdentifier?
     var count = 0
     
+    func ownerIsCurrentUser() -> Bool {
+        if let user = PFUser.currentUser(), let userId = user.objectId, let owner = owner, let ownerId = owner.objectId {
+            if userId == ownerId {
+                return true
+            }
+        }
+        return false
+    }
+    
     func uploadGuess() {
-    
-        if match != nil {
         
-            owner = PFUser.currentUser()
-            
-            guessUploadTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ () -> Void in
-                UIApplication.sharedApplication().endBackgroundTask(self.guessUploadTask!)
-            })
-            
-            saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+        owner = PFUser.currentUser()
+        
+        guessUploadTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ () -> Void in
+            UIApplication.sharedApplication().endBackgroundTask(self.guessUploadTask!)
+        })
+        
+        saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
 
-                if let error = error {
-                    //something bad happened
-                    print("error: \(error.description)")
-                }
-                
-                UIApplication.sharedApplication().endBackgroundTask(self.guessUploadTask!)
-                
-                if success {
-                    //created match successfully
-                    print("created guess OK")
-                }
-                
+            if let error = error {
+                //something bad happened
+                print("error: \(error.description)")
             }
-        } else {
             
-            //upload guess without match? NO, bad!
+            UIApplication.sharedApplication().endBackgroundTask(self.guessUploadTask!)
             
-        }
-    
-    }
-    
-    func checkGuess() {
-        if let string = string, let match = match {
-            var checkString: String!
-            if let fromUser = match.fromUser, let toUser = match.toUser { //unwraps when online match
-                if fromUser.madeGuess(self) {
-//                    let count = WordHelper.commonCharactersForWord(string, inMatchString: match.toUserWord!)
-                    checkString = match.toUserWord!
-                } else if toUser.madeGuess(self) {
-                    checkString = match.fromUserWord!
-                }
-            } else if match.fromUser == match.toUser { //true when solo match
-                checkString = match.fromUserWord!
+            if success {
+                //created match successfully
+                print("created guess OK")
             }
-            let common = WordHelper.commonCharactersForWord(string, inMatchString: checkString)
-            count = common
         }
     }
+    
+//    func checkGuess() {
+//        if let string = string, let match = match {
+//            var checkString: String!
+//            if let fromUser = match.fromUser, let toUser = match.toUser { //unwraps when online match
+//                if fromUser.madeGuess(self) {
+////                    let count = WordHelper.commonCharactersForWord(string, inMatchString: match.toUserWord!)
+//                    checkString = match.toUserWord!
+//                } else if toUser.madeGuess(self) {
+//                    checkString = match.fromUserWord!
+//                }
+//            } else if match.fromUser == match.toUser { //true when solo match
+//                checkString = match.fromUserWord!
+//            }
+//            let common = WordHelper.commonCharactersForWord(string, inMatchString: checkString)
+//            count = common
+//        }
+//    }
 }
 
 extension PNTAGuess: PFSubclassing {
@@ -92,16 +87,4 @@ extension PNTAGuess: PFSubclassing {
             super.registerSubclass()
         }
     }
-}
-
-extension PFUser {
-
-    func madeGuess(guess: PNTAGuess) -> Bool {
-        
-        if objectId == guess.owner?.objectId {
-            return true
-        }
-        return false
-    }
-
 }

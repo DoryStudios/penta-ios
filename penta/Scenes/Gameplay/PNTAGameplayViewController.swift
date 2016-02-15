@@ -25,26 +25,13 @@ class PNTAGameplayViewController: UIViewController {
     
     @IBOutlet weak var playButton: UIButton!
     
+    let currentUser = PNTAUser.sharedUser
     var match: PNTAMatch! {
         didSet {
-            for var i = 0; i < match.guesses.count; i++ {
-                let guess = match.guesses[i]
-                if match.isLocalMatch {
-                    if i % 2 == 0 {
-                        guess.count = WordHelper.commonCharactersForWord(guess.string!, inMatchString: match.toUserWord!)
-                        playerGuesses.append(guess)
-                    } else {
-                        guess.count = WordHelper.commonCharactersForWord(guess.string!, inMatchString: match.fromUserWord!)
-                        opponentGuesses.append(guess)
-                    }
-                } else { //compare PFUser
-                
-                }
-            }
-            
-            self.isLocalMatch = match.isLocalMatch
+            updateGameplayWithMatch(match)
         }
     }
+    var myWord: String!
     
     var playerGuesses: [PNTAGuess] = []
     var opponentGuesses: [PNTAGuess] = []
@@ -55,57 +42,49 @@ class PNTAGameplayViewController: UIViewController {
     var isLocalMatch: Bool = false
     var isActiveGame: Bool = true {
         didSet {
-            if !isActiveGame {
-                playButton.enabled = false
-            }
+            playButton.enabled = isActiveGame
         }
     }
     
     func pushGuess(guess: PNTAGuess) {
-        match.appendGuess(guess)
-        playerGuesses.append(guess)
-        playerTable.reloadData()
         
-        let indexPath = NSIndexPath(forRow: playerGuesses.count-1, inSection: 0)
-        playerTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
+        match.appendGuess(guess) {
+            (success, error) -> Void in
+            if let error = error {
+                print("error uploading guess:\n\(error)")
+            } else if success {
+//                self.addGuess(guess, toTable: self.playerTable)
+            }
+        }
         
-//        if playerGuesses.count > 4 {
-//            let index = WordHelper.characterStrengthIndexFromGuesses(playerGuesses)
-//            print("\(index)")
-//        }
+        if AdHelper.shouldServeAd() {
+            AdHelper.serveInterstitialAd()
+        }
         
         if playerDidWinMatch(match, withGuess: guess) {
             isActiveGame = false
             didFinishGame = true
             showMatchEnd(true)
         } else {
-            if AdHelper.shouldServeAd() {
-                AdHelper.serveInterstitialAd()
-            }
-        }
-
-        if isLocalMatch && isActiveGame {
-            let opponentWord = WordHelper.randomWord()
-            let opponentGuess = PNTAGuess()
-            opponentGuess.string = opponentWord
-            match.appendGuess(opponentGuess)
-            opponentGuesses.append(opponentGuess)
-            opponentTable.reloadData()
-            LocalMatchHelper.setMatch(match)
-            let indexPath = NSIndexPath(forRow: opponentGuesses.count-1, inSection: 0)
-            opponentTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
-        } else { //submit online
-            if let match = match, let user = PFUser.currentUser() {
-                guess.match = match
-                guess.owner = user
-                guess.uploadGuess()
-                //pop gameplay scene?
-            }
+//            if AdHelper.shouldServeAd() {
+//                AdHelper.serveInterstitialAd()
+//            }
         }
     }
     
     func addGuess(guess: PNTAGuess, toTable table:UITableView) {
-        
+        var count = 0
+        if table == playerTable {
+            playerGuesses.append(guess)
+            count = playerGuesses.count
+        } else {
+            opponentGuesses.append(guess)
+            count = opponentGuesses.count
+        }
+//        guesses.append(guess)
+        table.reloadData()
+        let indexPath = NSIndexPath(forRow: count-1, inSection: 0)
+        table.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
     }
     
     func playerDidWinMatch(match: PNTAMatch, withGuess guess: PNTAGuess) -> Bool {
@@ -181,6 +160,39 @@ class PNTAGameplayViewController: UIViewController {
         }
     }
     
+    func updateGameplayWithMatch(match: PNTAMatch) {
+        for var i = 0; i < match.guesses.count; i++ {
+            let guess = match.guesses[i]
+            if match.isLocalMatch {
+                if i % 2 == 0 {
+                    guess.count = WordHelper.commonCharactersForWord(guess.string!, inMatchString: match.toUserWord!)
+                    playerGuesses.append(guess)
+                } else {
+                    guess.count = WordHelper.commonCharactersForWord(guess.string!, inMatchString: match.fromUserWord!)
+                    opponentGuesses.append(guess)
+                }
+            } else { //compare PFUser
+                
+            }
+        }
+        
+        if let fromUser = match.fromUser, let toUser = match.toUser, let parseUser = currentUser.parseUser {
+            var myWord = "something"
+            if parseUser.objectId == fromUser.objectId {
+                if let word = match.fromUserWord {
+                    myWord = word
+                }
+            } else if parseUser.objectId == toUser.objectId {
+                if let word = match.toUserWord {
+                    myWord = word
+                }
+            }
+            self.myWord = myWord
+        }
+        
+        self.isLocalMatch = match.isLocalMatch
+    }
+    
     //MARK: - Lifecycle methods
 
     override func viewDidLoad() {
@@ -195,18 +207,53 @@ class PNTAGameplayViewController: UIViewController {
         
         if match.isLocalMatch {
             if let word = match.fromUserWord, let label = playerWordLabel {
-                label.text = "using \(word)"
+                myWord = word
             }
+            if let behavior = match.localMatchBehavior {
+                behavior.enabled = true
+            }
+        } else {
+            
         }
+        
+        match.addObserver(self, forKeyPath: "ownGuesses", options: .New, context: nil)
+        match.addObserver(self, forKeyPath: "opponentGuesses", options: .New, context: nil)
         
         if match.isFinished {
             isActiveGame = false
-            
         }
+        
+        playerWordLabel.text = "using \(myWord)"
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        match.removeObserver(self, forKeyPath: "ownGuesses")
+        match.removeObserver(self, forKeyPath: "opponentGuesses")
+        super.viewWillDisappear(animated)
     }
     
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    //MARK: - KVO callback
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        guard let keyPath = keyPath, let dict = change else {
+            return
+        }
+        
+        if keyPath == "ownGuesses" {
+            playerTable.reloadData()
+            let indexPath = NSIndexPath(forRow: match.ownGuesses.count-1, inSection: 0)
+            playerTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
+        } else if keyPath == "opponentGuesses" {
+            opponentTable.reloadData()
+            let indexPath = NSIndexPath(forRow: match.opponentGuesses.count-1, inSection: 0)
+            opponentTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
+        } else {
+            print("could not use change:\n\(dict)")
+        }
     }
     
     //MARK: - Navigation method
@@ -238,9 +285,9 @@ extension PNTAGameplayViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
         if tableView == self.playerTable {
-            count = self.playerGuesses.count
+            count = match.ownGuesses.count
         } else if tableView == self.opponentTable {
-            count = self.opponentGuesses.count
+            count = match.opponentGuesses.count
         }
         return count
     }
@@ -257,14 +304,16 @@ extension PNTAGameplayViewController: UITableViewDataSource {
         let index = indexPath.row
         var guess: PNTAGuess!
         if tableView == self.playerTable {
-            guess = playerGuesses[index]
+            guess = match.ownGuesses[index]
             if isLocalMatch {
                 let count = WordHelper.commonCharactersForWord(guess.string!, inMatchString: match.toUserWord!)
                 guess.count = count
                 cell!.count = count
+            } else {
+                
             }
         } else if tableView == self.opponentTable {
-            guess = opponentGuesses[index]
+            guess = match.opponentGuesses[index]
             if isLocalMatch {
                 let count = WordHelper.commonCharactersForWord(guess.string!, inMatchString: match.fromUserWord!)
                 cell!.count = count
@@ -287,25 +336,7 @@ extension PNTAGameplayViewController: UITableViewDataSource {
 }
 
 extension PNTAGameplayViewController: UITableViewDelegate {
-//    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-//        let cellContentView  = cell.contentView;
-//        let rotationAngleDegrees = -30.0;
-//        let rotationAngleRadians = rotationAngleDegrees * (M_PI/180);
-//        let offsetPositioning = CGPointMake(500, -20.0);
-//        let offsetPositioning = CGPointMake(0, cell.contentView.frame.size.height*4);
-//        var transform = CATransform3DIdentity;
-//        transform = CATransform3DRotate(transform, CGFloat(rotationAngleRadians), -50.0, 0.0, 1.0);
-//        transform = CATransform3DTranslate(transform, offsetPositioning.x, offsetPositioning.y, -50.0);
-//        cellContentView.layer.transform = transform;
-//        cellContentView.layer.opacity = 0.8;
-//        
-//        UIView.animateWithDuration(0.65, delay: 0.0, usingSpringWithDamping: 0.65, initialSpringVelocity: 0.8, options: .TransitionNone, animations: { () -> Void in
-//            cellContentView.layer.transform = CATransform3DIdentity;
-//            cellContentView.layer.opacity = 1;
-//            }) { (success) -> Void in
-//                
-//        }
-//    }
+
 }
 
 extension PNTAGameplayViewController: PNTAWordSelectorViewDelegate {
@@ -315,24 +346,11 @@ extension PNTAGameplayViewController: PNTAWordSelectorViewDelegate {
             let word = selector.word
             let guess = PNTAGuess()
             guess.string = word
-            
+            guess.owner = PFUser.currentUser()
             pushGuess(guess)
-//            match.guesses.append(guess)
-//            playerGuesses.append(guess)
-//            playerTable.reloadData()
-//            
-//            if isLocalMatch {
-//                let opponentWord = WordHelper.randomWord()
-//                let opponentGuess = PNTAGuess()
-//                opponentGuess.string = opponentWord
-//                match.guesses.append(opponentGuess)
-//                opponentGuesses.append(opponentGuess)
-//                opponentTable.reloadData()
-//                LocalMatchHelper.setGuesses(match.guesses)
-//            } else {
-//            
-//            }
             
+            let center = NSNotificationCenter.defaultCenter()
+            center.postNotificationName("Penta User Submit Guess", object: nil)
         }
     }
     

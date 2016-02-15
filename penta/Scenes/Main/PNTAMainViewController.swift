@@ -34,7 +34,7 @@ class PNTAMainViewController: UITableViewController {
     func fetchMatches() {
         if let user = PFUser.currentUser() {
             ParseHelper.fetchMatchesForUser(user, includeFinished: false, completionBlock: {
-            (result: [AnyObject]?, error: NSError?) -> Void in
+            (result: [PFObject]?, error: NSError?) -> Void in
                 if let matches = result as? [PNTAMatch] {
                     print("fetched \(matches.count) matches")
                     self.filterMatches(matches)
@@ -85,7 +85,7 @@ class PNTAMainViewController: UITableViewController {
         }
         
         ParseHelper.fetchUserByFacebookID(friend.socialID) {
-        (result: [AnyObject]?, error: NSError?) -> Void in
+        (result: [PFObject]?, error: NSError?) -> Void in
             if let error = error {
                 print("error looking up user:\n\(error)")
             } else if let result = result as? [PFUser] {
@@ -102,6 +102,7 @@ class PNTAMainViewController: UITableViewController {
     }
     
     func pushMatch(match: PNTAMatch) {
+        match.isFinished = false
         if match.isLocalMatch {
 //            let word = WordHelper.randomWord()
 //            match.toUserWord = word
@@ -110,7 +111,7 @@ class PNTAMainViewController: UITableViewController {
         } else {
             match.uploadMatch()
             pendingMatches.append(match)
-            updateTable()
+            performSegueWithIdentifier(GAMEPLAY_SEGUE, sender: match)
         }
     }
     
@@ -202,19 +203,20 @@ class PNTAMainViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let user = PFUser.currentUser() {
-            if PFFacebookUtils.isLinkedWithUser(user) { //happy path
-                fetchMatches()
-            } else { //likely user invalidated session in facebook
-                isLinkedToFacebook = false
-                }
-            } else { //new user, offer link to facebook, don't bother fetch remote matches
-                isLinkedToFacebook = false
-        }
+//        if let user = PFUser.currentUser() {
+//            if PFFacebookUtils.isLinkedWithUser(user) { //happy path
+//                fetchMatches()
+//            } else { //likely user invalidated session in facebook
+//                isLinkedToFacebook = false
+//                }
+//            } else { //new user, offer link to facebook, don't bother fetch remote matches
+//                isLinkedToFacebook = false
+//        }
 
         isLinkedToFacebook = currentUser.isLinkedToFacebook
         currentUser.addObserver(self, forKeyPath: "isLinkedToFacebook", options: .New, context: nil)
         currentUser.addObserver(self, forKeyPath: "availableFriends", options: .New, context: nil)
+        currentUser.addObserver(self, forKeyPath: "availableMatches", options: .New, context: nil)
         
         if currentUser.availableFriends.count > 0 {
             
@@ -257,6 +259,10 @@ class PNTAMainViewController: UITableViewController {
         } else if keyPath == "availableFriends" {
             //TODO: should sort friends first
             updateTable()
+        } else if keyPath == "availableMatches" {
+            if let matches = dict["new"] as? [PNTAMatch] {
+                filterMatches(matches)
+            }
         }
     }
     
@@ -302,6 +308,9 @@ class PNTAMainViewController: UITableViewController {
                 
                 if let match = match, let cell = cell as? PNTAMatchTableViewCell {
                     cell.match = match
+                    if !match.isLocalMatch {
+                        match.fetchGuesses()
+                    }
                 }
                 
                 if hasActiveMatches {
@@ -463,7 +472,8 @@ class PNTAMainViewController: UITableViewController {
         }
         
         if let match = match {
-            pushMatch(match)
+//            pushMatch(match)
+            performSegueWithIdentifier(GAMEPLAY_SEGUE, sender: match)
         }
     }
 }

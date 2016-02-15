@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ParseFacebookUtilsV4
 import Parse
 
 protocol ParseHelperDelegate {
@@ -40,7 +41,7 @@ class ParseHelper: NSObject {
     
     var delegate: ParseHelperDelegate?
     
-    static func fetchMatchesForUser(user: PFUser, includeFinished include: Bool, completionBlock: PFArrayResultBlock) {
+    static func fetchMatchesForUser(user: PFUser, includeFinished include: Bool, completionBlock: PFQueryArrayResultBlock) {
         let fromUserQuery = PFQuery(className: PARSE_MATCH_CLASS)
         fromUserQuery.whereKey(PARSE_FROM_USER_KEY, equalTo: user)
         if !include {
@@ -57,27 +58,27 @@ class ParseHelper: NSObject {
         
         let mainQuery = PFQuery.orQueryWithSubqueries([fromUserQuery, toUserQuery])
         mainQuery.includeKey(PARSE_MATCH_LASTGUESS_KEY)
-        
+
         mainQuery.findObjectsInBackgroundWithBlock(completionBlock)
     }
     
-    static func fetchGuessesForMatch(match: PNTAMatch, completionBlock: PFArrayResultBlock) {
-        let query = PFQuery(className: PARSE_GUESS_CLASS)
+    static func fetchGuessesForMatch(match: PNTAMatch, completionBlock: PFQueryArrayResultBlock) {
+        let query = match.relationforKey("guesses").query()
         
-        query.whereKey(PARSE_GUESS_MATCH_KEY, equalTo: match)
+//        query.whereKey(PARSE_GUESS_MATCH_KEY, equalTo: match)
         //query.includeKey(PARSE_STRING_GUESS_KEY)
         
         query.findObjectsInBackgroundWithBlock(completionBlock)
     }
     
-    static func fetchUserByFacebookID(id: String, completionBlock: PFArrayResultBlock) {
+    static func fetchUserByFacebookID(id: String, completionBlock: PFQueryArrayResultBlock) {
         if let query = PFUser.query() {
             query.whereKey("facebookToken", equalTo: id)
             query.findObjectsInBackgroundWithBlock(completionBlock)
         }
     }
     
-    static func fetchRandomUsers(completionBlock: PFArrayResultBlock) {
+    static func fetchRandomUsers(completionBlock: PFQueryArrayResultBlock) {
         
         if let query = PFUser.query() {
             query.orderByAscending(PARSE_USER_UPDATED_KEY)

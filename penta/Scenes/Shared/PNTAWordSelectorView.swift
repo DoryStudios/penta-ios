@@ -74,13 +74,18 @@ class PNTAWordSelectorView: UIView {
     }
     
     @IBAction func didPressRandom(sender: AnyObject) {
-        let word = WordHelper.randomWord()
-        let chars = Array(word.uppercaseString.characters)
-        for var i = 0; i < chars.count; i++ {
-            let label = labels[i]
-            let char = chars[i]
-            label.text = "\(char)"
-        }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
+            let word = WordHelper.randomWord()
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                let chars = Array(word.uppercaseString.characters)
+                for var i = 0; i < chars.count; i++ {
+                    let label = self.labels[i]
+                    let char = chars[i]
+                    label.text = "\(char)"
+                }
+            })
+        })
         
 //        helpContainerHeightConstraint.constant = 40
 //        UIView.animateWithDuration(0.3) { () -> Void in
